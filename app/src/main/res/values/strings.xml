@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">VehicleVista</string>
+    <string name="nav_loaiXe">Loại xe</string>
+    <string name="nav_xe">Xe</string>
+    <string name="nav_lichSu">Lịch sử</string>
+    <string name="sub_quanLy">Quản lý</string>
+    <string name="sub_trangChu">Trang chủ</string>
+    <string name="nav_lichSuDatXe">Lịch sử đặt xe</string>
+    <string name="sub_taiKhoan">Tài khoản</string>
 </resources>
