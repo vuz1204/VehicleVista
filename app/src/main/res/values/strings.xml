@@ -7,4 +7,6 @@
     <string name="sub_trangChu">Trang chủ</string>
     <string name="nav_lichSuDatXe">Lịch sử đặt xe</string>
     <string name="sub_taiKhoan">Tài khoản</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
