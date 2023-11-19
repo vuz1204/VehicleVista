@@ -6,6 +6,7 @@
     android:layout_margin="10dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,10 +15,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_textview"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:background="@drawable/background_textview"
-            android:text="Car"
+            android:text="Brand"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -29,46 +30,28 @@
             android:padding="10dp">
 
             <EditText
-                android:id="@+id/edIdCar"
+                android:id="@+id/edIdBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Id"
                 android:minHeight="48dp" />
 
-            <Spinner
-                android:id="@+id/spinnerIdBrand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp" />
-
             <EditText
-                android:id="@+id/edModel"
+                android:id="@+id/edBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Model"
+                android:hint="Brand"
                 android:minHeight="48dp" />
 
-            <EditText
-                android:id="@+id/edPrice"
+            <Button
+                android:id="@+id/btnSaveBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price"
-                android:minHeight="48dp" />
-
-            <CheckBox
-                android:id="@+id/chkStatusCar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Available" />
-
-                <Button
-                    android:id="@+id/btnSaveCar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_button"
-                    android:text="Save"
-                    android:textColor="@color/black"
-                    app:backgroundTint="@null" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_button"
+                android:text="Save"
+                android:textColor="@color/black"
+                app:backgroundTint="@null" />
         </LinearLayout>
     </LinearLayout>
 
