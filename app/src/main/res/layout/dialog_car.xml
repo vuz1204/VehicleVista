@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:background="#65BBFF"
+            android:text="Sách"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/edt_idCar_dialog_Car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mã số"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/edt_model_dialog_Car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tên xe"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/edt_price_dialog_car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Gía thuê"
+                android:minHeight="48dp" />
+
+            <Spinner
+                android:id="@+id/spinner_idBrand_dialog_Car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:minHeight="48dp" />
+            <CheckBox
+                android:id="@+id/chk_status_dialog_Car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đang cho thuê" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnSave_ql_Car"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="#65BBFF"
+                    android:text="LƯU"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnCancle_ql_Car"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#65BBFF"
+                    android:text="HỦY"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
