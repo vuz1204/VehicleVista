@@ -20,7 +20,7 @@
             android:padding="7dp">
 
             <TextView
-                android:id="@+id/tvIdBrandCar"
+                android:id="@+id/tvIdBrand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
