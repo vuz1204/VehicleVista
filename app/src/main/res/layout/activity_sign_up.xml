@@ -37,9 +37,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:alpha="0.7"
-                android:text="Please sign up to get started"
-                android:layout_marginBottom="30dp"/>
+                android:text="Please sign up to get started" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -48,8 +48,36 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edUsernameSU"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="Username"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edFullnameSU"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Fullname"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPhoneNumberSU"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Phone number"
                     android:inputType="textEmailAddress"
                     android:padding="10dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -63,7 +91,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edPasswordSU"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:maxLength="20"
@@ -77,9 +105,9 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edRePassword"
+                    android:id="@+id/edRePasswordSU"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="Re-type Password"
                     android:inputType="textPassword"
                     android:maxLength="20"
@@ -91,8 +119,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="15dp"
-                android:text="Sign up"
                 android:backgroundTint="#E8373636"
+                android:text="Sign up"
                 app:cornerRadius="32dp" />
         </LinearLayout>
 

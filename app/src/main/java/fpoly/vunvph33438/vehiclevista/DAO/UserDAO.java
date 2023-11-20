@@ -64,7 +64,7 @@ public class UserDAO {
                 String username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME));
                 String password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD));
                 String fullname = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULLNAME));
-                String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONENUMBER));
+                int phoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PHONENUMBER));
                 list.add(new User(idUser, username, password, fullname, phoneNumber));
             }
         }

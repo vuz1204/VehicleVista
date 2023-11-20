@@ -18,8 +18,10 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:titleTextColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#06102d"
                 android:minHeight="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </com.google.android.material.appbar.AppBarLayout>
@@ -34,8 +36,8 @@
         android:id="@+id/nvBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#06102d"
         android:layout_alignParentBottom="true"
-        app:itemIconTint="@color/custom_color_bottom_nav"
-        app:itemTextColor="@color/custom_color_bottom_nav"/>
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"/>
 </RelativeLayout>
