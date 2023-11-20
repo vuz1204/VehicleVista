@@ -6,13 +6,13 @@
     tools:context=".Fragment.BrandFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvLoaiSach"
+        android:id="@+id/rcvBrand"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabLoaiSach"
+        android:id="@+id/fabBrand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

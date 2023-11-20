@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import fpoly.vunvph33438.vehiclevista.Fragment.BrandFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private String username = "admin"; // replace with actual username
@@ -32,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
             // Handle navigation item clicks here
             int itemId = item.getItemId();
             if (itemId == R.id.nav_loaiXe) {
-                // Handle the click for nav_loaiXe
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_loaiXe, new BrandFragment())
+                        .commit();
+                return true;
             } else if (itemId == R.id.nav_xe) {
                 // Handle the click for nav_xe
             } else if (itemId == R.id.nav_lichSu) {
