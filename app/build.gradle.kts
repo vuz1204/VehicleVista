@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "fpoly.vunvph33438.vehiclevista"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "fpoly.vunvph33438.vehiclevista"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 33 // Change this to 34
         versionCode = 1
         versionName = "1.0"
 
