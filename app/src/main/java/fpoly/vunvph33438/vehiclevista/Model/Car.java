@@ -5,16 +5,23 @@ public class Car {
     private int idBrand;
     private String model;
     private int price;
-    private boolean available;
-    private byte[] image;
+    private String description;
+    private int available;
+    private String image;
 
-    public Car(int idCar, int idBrand, String model, int price, boolean available, byte[] image) {
+
+    public Car(int idCar, int idBrand, String model, int price,String description, int available, String image) {
         this.idCar = idCar;
         this.idBrand = idBrand;
         this.model = model;
         this.price = price;
+        this.description = description;
         this.available = available;
         this.image = image;
+    }
+
+    public Car() {
+
     }
 
     public int getIdCar() {
@@ -49,19 +56,27 @@ public class Car {
         this.price = price;
     }
 
-    public boolean isAvailable() {
+    public int isAvailable() {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(int available) {
         this.available = available;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

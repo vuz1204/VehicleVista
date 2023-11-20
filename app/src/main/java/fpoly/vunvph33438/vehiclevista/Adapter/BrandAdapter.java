@@ -63,30 +63,34 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
 
 
     public void showDeleteDialog(int position) {
-        Brand brand = list.get(position);
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setIcon(R.drawable.warning);
-        builder.setTitle("Notification");
-        builder.setMessage("Are you sure you want to delete " + brand.getIdBrand() + " ?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    if (brandDAO.delete(brand)) {
-                        Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
-                        list.remove(brand);
-                        notifyItemChanged(position);
-                        notifyItemRemoved(position);
-                    } else {
+        if (position >= 0 && position < list.size()) {
+            Brand brand = list.get(position);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setIcon(R.drawable.warning);
+            builder.setTitle("Notification");
+            builder.setMessage("Are you sure you want to delete " + brand.getIdBrand() + " ?");
+            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        if (brandDAO.delete(brand)) {
+                            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            list.remove(brand);
+                            notifyItemChanged(position);
+                            notifyItemRemoved(position);
+                        } else {
+                            Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
                         Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
-                    Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-        builder.setNegativeButton("Cancel", null);
-        builder.show();
+            });
+            builder.setNegativeButton("Cancel", null);
+            builder.show();
+        } else {
+            Log.e(TAG, "Invalid position: " + position);
+        }
     }
     @Override
     public int getItemCount() {

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "VehicleVista.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id_brand INTEGER NOT NULL, " +
                 "model TEXT NOT NULL, " +
                 "price INTEGER NOT NULL, " +
+                "description TEXT NOT NULL, " +
                 "available BOOLEAN NOT NULL DEFAULT 1, " +
                 "image BLOB, " +
                 "FOREIGN KEY (id_brand) REFERENCES Brand (id_brand))"; 
@@ -56,7 +57,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "rentalEndDate DATE NOT NULL, " +
                 "price INTEGER NOT NULL, " +
                 "paymentMethod INTEGER NOT NULL, " +
-                "status BOOLEAN NOT NULL, " +
+                "status BOOLEAN NOT NULL," +
                 "FOREIGN KEY (id_car) REFERENCES Car (id_car), " +
                 "FOREIGN KEY (id_user) REFERENCES User (id_user))";
         sqLiteDatabase.execSQL(createReceiptTable);

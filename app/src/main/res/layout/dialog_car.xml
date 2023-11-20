@@ -54,12 +54,33 @@
                 android:layout_height="wrap_content"
                 android:hint="Price"
                 android:minHeight="48dp" />
-
-            <CheckBox
-                android:id="@+id/chkStatusCar"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/edDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Available" />
+                android:hint="Description"
+                android:minHeight="48dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/imgImportCar"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:background="@drawable/logo"/>
+                </LinearLayout>
+                <CheckBox
+                    android:id="@+id/chkStatusCar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available" />
+            </LinearLayout>
 
                 <Button
                     android:id="@+id/btnSaveCar"
