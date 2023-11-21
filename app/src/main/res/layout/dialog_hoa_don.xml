@@ -8,23 +8,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Xác Nhận Hóa Đơn"
         android:textSize="33dp"
-        android:layout_marginBottom="10dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="11dp"
             android:text="Receipt ID: "
-            android:layout_marginLeft="10dp"
             android:textSize="23dp"
-            android:layout_marginTop="11dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,14 +40,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="117dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="11dp"
             android:text="UserName:            "
-            android:layout_marginLeft="10dp"
             android:textSize="23dp"
-            android:layout_marginTop="11dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,18 +58,21 @@
             android:text="abc"
             android:textSize="23dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="117dp"
             android:layout_height="wrap_content"
-            android:text="Car ID:"
             android:layout_marginLeft="10dp"
-            android:textSize="23dp"
             android:layout_marginTop="11dp"
-            android:textStyle="bold"/>
+            android:text="Car ID:"
+            android:textSize="23dp"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,12 +81,13 @@
             android:text="abc"
             android:textSize="23dp" />
     </LinearLayout>
+
     <CheckBox
+        android:id="@+id/chkCheckHD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="100dp"
-        android:text="Đã Thanh Toán"
-        android:id="@+id/chkcheck"/>
+        android:text="Đã Thanh Toán" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,23 +96,25 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal">
+
         <Button
+            android:id="@+id/btnConfirm"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Xác Nhận"
-            android:textStyle="bold"
             android:layout_marginRight="10dp"
             android:backgroundTint="#4CAF50"
+            android:text="Xác Nhận"
             android:textSize="17dp"
-            android:id="@+id/HD_xacnhan"/>
+            android:textStyle="bold" />
+
         <Button
+            android:id="@+id/btnCancelHD"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Hủy"
-            android:textStyle="bold"
             android:backgroundTint="#555B60"
+            android:text="Hủy"
             android:textSize="17dp"
-            android:id="@+id/HD_huy"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
