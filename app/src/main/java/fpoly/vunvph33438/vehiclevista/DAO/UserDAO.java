@@ -77,7 +77,7 @@ public class UserDAO {
     }
 
     public User selectID(String id) {
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_USER + "=?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=?";
         ArrayList<User> list = getAll(sql, id);
 
         if (!list.isEmpty()) {

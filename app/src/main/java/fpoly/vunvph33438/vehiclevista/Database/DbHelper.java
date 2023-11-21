@@ -20,7 +20,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // Create the User table
         String createUserTable = "CREATE TABLE User (" +
                 "id_user INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "username TEXT NOT NULL, " +
+                "username TEXT UNIQUE, " +
                 "password TEXT NOT NULL, " +
                 "fullname TEXT NOT NULL, " +
                 "phoneNumber INTEGER NOT NULL)";

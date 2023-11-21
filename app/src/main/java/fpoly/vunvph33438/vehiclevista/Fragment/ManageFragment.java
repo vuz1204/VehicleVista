@@ -1,66 +1,70 @@
 package fpoly.vunvph33438.vehiclevista.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
+import fpoly.vunvph33438.vehiclevista.ChangePasswordActivity;
+import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
+import fpoly.vunvph33438.vehiclevista.LoginActivity;
+import fpoly.vunvph33438.vehiclevista.Model.User;
 import fpoly.vunvph33438.vehiclevista.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ManageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ManageFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ManageFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ManageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ManageFragment newInstance(String param1, String param2) {
-        ManageFragment fragment = new ManageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    View view;
+    TextView tvFullname, tvPhoneNumber, tvSalesReport, tvChangePassword, tvLogout;
+    UserDAO userDAO;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage, container, false);
+        view = inflater.inflate(R.layout.fragment_manage, container, false);
+
+        tvFullname = view.findViewById(R.id.tvFullname);
+        tvPhoneNumber = view.findViewById(R.id.tvPhoneNumber);
+        String username = getActivity().getIntent().getStringExtra("username");
+        userDAO = new UserDAO(getActivity());
+        User user = userDAO.selectID(username);
+        String fullname = user.getFullname();
+        int phoneNumber = user.getPhoneNumber();
+        tvFullname.setText("Welcome " + fullname + "!");
+        tvPhoneNumber.setText(String.valueOf("0" + phoneNumber));
+
+        tvSalesReport = view.findViewById(R.id.tvSalesReport);
+        tvSalesReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        tvChangePassword = view.findViewById(R.id.tvChangePassword);
+        tvChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvLogout = view.findViewById(R.id.tvLogout);
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finishAffinity();
+            }
+        });
+
+        return view;
     }
 }

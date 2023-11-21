@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
+import fpoly.vunvph33438.vehiclevista.Fragment.ManageFragment;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             if (userDAO.checkLogin(strUser, strPass)) {
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
                 rememberUser(strUser, strPass, chkRememberPass.isChecked());
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("username", strUser);
                 startActivity(intent);
