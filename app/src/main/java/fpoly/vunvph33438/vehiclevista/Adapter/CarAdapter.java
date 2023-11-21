@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.squareup.picasso.Picasso;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -59,15 +62,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             holder.tvAvailable.setText("Available: " + car.isAvailable());
             String imagePath = car.getImage();
             if (imagePath != null && !imagePath.isEmpty()) {
-                Bitmap bitmap = convertFileToBitmap(imagePath);
-                if (bitmap != null) {
-                    holder.imgCar.setImageBitmap(bitmap);
-                } else {
-                    holder.imgCar.setImageResource(R.drawable.car); // Set a default image or handle accordingly
-                }
+                // Use Picasso to load the image asynchronously
+                Picasso.get().load(Uri.parse(imagePath)).into(holder.imgCar);
             } else {
                 holder.imgCar.setImageResource(R.drawable.car); // Set a default image or handle accordingly
             }
+
         }
 
         holder.imgdelete.setOnClickListener(v -> {
@@ -132,14 +132,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             tvAvailable = itemView.findViewById(R.id.tvAvailable);
             imgCar = itemView.findViewById(R.id.imgCar);
             imgdelete = itemView.findViewById(R.id.imgDeleteCar);
-        }
-    }
-    private Bitmap convertByteArrayToBitmap(byte[] byteArray) {
-        try {
-            return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        } catch (Exception e) {
-            Log.e(TAG, "Error converting byte array to Bitmap: " + e.getMessage());
-            return null;
         }
     }
     private Bitmap convertFileToBitmap(String filePath) {

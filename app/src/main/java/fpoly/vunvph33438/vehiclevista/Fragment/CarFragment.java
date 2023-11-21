@@ -106,6 +106,8 @@ public class CarFragment extends Fragment {
         edDescription = view1.findViewById(R.id.edDescription);
         spinnerBrand = view1.findViewById(R.id.spinnerIdBrand);
         imgImport = view1.findViewById(R.id.imgImportCar);
+        chkAvailable = view1.findViewById(R.id.chkStatusCar); // Add this line
+
         imgImport.setOnClickListener(v -> {
             // Request permission and launch image picker
             importImageLauncher.launch("image/*");
@@ -126,12 +128,17 @@ public class CarFragment extends Fragment {
             spinnerBrand.setSelection(selectedPosition);
             edModel.setText(car.getModel());
             edPrice.setText(String.valueOf(car.getPrice()));
+            edDescription.setText(car.getDescription());
             if (car.isAvailable() == 0) {
                 chkAvailable.setChecked(true);
+                chkAvailable.setText("Đang cho thuê xe");
+                chkAvailable.setTextColor(Color.BLUE);
             } else {
                 chkAvailable.setChecked(false);
+                chkAvailable.setText("Có sẵn xe cho thuê");
+                chkAvailable.setTextColor(Color.BLACK); // Set your desired color
             }
-            if (car.getImage() != null && !car.getImage().isEmpty()) {
+             if (car.getImage() != null && !car.getImage().isEmpty()) {
                 selectedImageUri = Uri.parse(car.getImage());
                 try {
                     Bitmap selectedImage = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);

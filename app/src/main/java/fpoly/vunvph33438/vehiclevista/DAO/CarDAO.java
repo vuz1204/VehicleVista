@@ -31,7 +31,9 @@ public class CarDAO {
     private static final String COLUMN_AVAILABLE = "available";
     private static final String COLUMN_IMAGE = "image";
     private Context context;
+
     public CarDAO(Context context) {
+        this.context = context;
         dbHelper = new DbHelper(context);
     }
     public boolean insert(Car car) {
@@ -96,15 +98,20 @@ public class CarDAO {
     }
     public void onActivityResult(Uri imageUri, ImageView imageView) {
         try {
-            InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
-            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            imageView.setImageBitmap(selectedImage);
+            if (context != null) {
+                InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
+                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imageView.setImageBitmap(selectedImage);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     // Add a new method in CarDAO to save the image URI
     public boolean updateImageUri(int carId, Uri imageUri) {
+        if (imageUri == null) {
+            return false;
+        }
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_IMAGE, imageUri.toString());
