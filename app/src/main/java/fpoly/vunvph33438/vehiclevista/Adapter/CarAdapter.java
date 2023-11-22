@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
-import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
 
@@ -86,7 +85,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         if (position >= 0 && position < list.size()) {
             Car car = list.get(position);
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setIcon(R.drawable.warning);
+            builder.setIcon(R.drawable.ic_warning);
             builder.setTitle("Notification");
             builder.setMessage("Are you sure you want to delete " + car.getIdBrand() + " ?");
             builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
