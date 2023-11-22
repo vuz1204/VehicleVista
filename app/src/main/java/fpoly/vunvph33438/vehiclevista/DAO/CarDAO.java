@@ -45,10 +45,19 @@ public class CarDAO {
         contentValues.put(COLUMN_DESCRIPTION, car.getDescription());
         contentValues.put(COLUMN_AVAILABLE, car.isAvailable());
         contentValues.put(COLUMN_IMAGE, car.getImage());
-        long check = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-        car.setIdCar((int) check);
-        return check != -1;
+        long insertedId = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
+        // Close the database after the operation
+        sqLiteDatabase.close();
+        if (insertedId != -1) {
+            // Insertion was successful, set the ID to the Car object
+            car.setIdCar((int) insertedId);
+            return true;
+        } else {
+            // Insertion failed
+            return false;
+        }
     }
+
     public boolean delete(Car car) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String[] whereArgs = {String.valueOf(car.getIdCar())};
@@ -109,15 +118,19 @@ public class CarDAO {
     }
     // Add a new method in CarDAO to save the image URI
     public boolean updateImageUri(int carId, Uri imageUri) {
-        if (imageUri == null) {
-            return false;
-        }
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_IMAGE, imageUri.toString());
-        String[] whereArgs = {String.valueOf(carId)};
-        long check = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_ID_CAR + "=?", whereArgs);
-        return check != -1;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IMAGE, imageUri.toString());
+
+        // Update the record with the given carId
+        int rowsAffected = db.update(TABLE_NAME, values, COLUMN_ID_CAR + " = ?",
+                new String[]{String.valueOf(carId)});
+
+        db.close();
+
+        // Return true if the update was successful
+        return rowsAffected > 0;
     }
+
 
 }

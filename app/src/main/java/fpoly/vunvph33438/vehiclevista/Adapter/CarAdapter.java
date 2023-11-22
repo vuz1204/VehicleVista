@@ -61,7 +61,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             holder.tvAvailable.setText("Available: " + car.isAvailable());
             String imagePath = car.getImage();
             if (imagePath != null && !imagePath.isEmpty()) {
-                // Use Picasso to load the image asynchronously
                 Picasso.get().load(Uri.parse(imagePath)).into(holder.imgCar);
             } else {
                 holder.imgCar.setImageResource(R.drawable.car); // Set a default image or handle accordingly
