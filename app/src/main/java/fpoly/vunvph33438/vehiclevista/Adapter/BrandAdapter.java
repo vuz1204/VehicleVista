@@ -66,7 +66,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
         if (position >= 0 && position < list.size()) {
             Brand brand = list.get(position);
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setIcon(R.drawable.warning);
+            builder.setIcon(R.drawable.ic_warning);
             builder.setTitle("Notification");
             builder.setMessage("Are you sure you want to delete " + brand.getIdBrand() + " ?");
             builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {

@@ -1,9 +1,6 @@
 package fpoly.vunvph33438.vehiclevista;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
-import fpoly.vunvph33438.vehiclevista.Fragment.ManageFragment;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -63,7 +61,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     public int validate() {
         int check = 1;
-        if (edOldPassWord.getText().toString().isEmpty()|| edNewPassword.getText().toString().isEmpty() || edReNewPassword.getText().toString().isEmpty()) {
+        if (edOldPassWord.getText().toString().isEmpty() || edNewPassword.getText().toString().isEmpty() || edReNewPassword.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please enter complete information", Toast.LENGTH_SHORT).show();
             check = -1;
         } else {
@@ -74,12 +72,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
             if (!passOld.equals(edOldPassWord.getText().toString())) {
                 Toast.makeText(this, "Old password is incorrect", Toast.LENGTH_SHORT).show();
                 check = -1;
-            }
-            if (pass.equals(passOld)) {
+            } else if (pass.length() < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
+                check = -1;
+            } else if (pass.equals(passOld)) {
                 Toast.makeText(this, "New password must not match the old password", Toast.LENGTH_SHORT).show();
                 check = -1;
-            }
-            if (!pass.equals(rePass)) {
+            } else if (!pass.equals(rePass)) {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 check = -1;
             }
