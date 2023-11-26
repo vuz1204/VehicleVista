@@ -7,10 +7,10 @@ public class Car {
     private int price;
     private String description;
     private int available;
-    private String image;
+    private byte[] image;
 
 
-    public Car(int idCar, int idBrand, String model, int price,String description, int available, String image) {
+    public Car(int idCar, int idBrand, String model, int price,String description, int available, byte[] image) {
         this.idCar = idCar;
         this.idBrand = idBrand;
         this.model = model;
@@ -64,11 +64,11 @@ public class Car {
         this.available = available;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

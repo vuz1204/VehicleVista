@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
@@ -58,14 +60,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             holder.tvModel.setText("Model :" + car.getModel());
             holder.tvPrice.setText("Price :" + car.getPrice());
             holder.tvDescription.setText("Description :" + car.getDescription());
-            holder.tvAvailable.setText("Available: " + car.isAvailable());
-            String imagePath = car.getImage();
-            if (imagePath != null && !imagePath.isEmpty()) {
-                Picasso.get().load(Uri.parse(imagePath)).into(holder.imgCar);
+            if (car.isAvailable() == 0) {
+                holder.tvAvailable.setTextColor(Color.BLUE);
+                holder.tvAvailable.setText("Available");
             } else {
-                holder.imgCar.setImageResource(R.drawable.car); // Set a default image or handle accordingly
+                holder.tvAvailable.setTextColor(Color.RED);
+                holder.tvAvailable.setText("UnAvailable");
             }
-
+            Bitmap bitmap = BitmapFactory.decodeByteArray(car.getImage(), 0, car.getImage().length);
+            holder.imgCar.setImageBitmap(bitmap);
         }
 
         holder.imgdelete.setOnClickListener(v -> {

@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
@@ -44,7 +45,7 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
     @Override
     public void onBindViewHolder(@NonNull CarHomeViewHolder holder, int position) {
         Car car = list.get(position);
-        String imagePath = car.getImage();
+        String imagePath = Arrays.toString(car.getImage());
         if (imagePath != null && !imagePath.isEmpty() && holder.imgCarHome != null) {
             // Check if holder.imgCarHome is not null before loading the image
             Picasso.get()
