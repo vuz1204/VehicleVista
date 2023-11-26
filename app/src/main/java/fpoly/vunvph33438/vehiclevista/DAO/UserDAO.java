@@ -16,7 +16,9 @@ public class UserDAO {
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_FULLNAME = "fullname";
-    public static final String COLUMN_PHONENUMBER = "phoneNumber";
+    public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_PHONE_NUMBER = "phoneNumber";
+    public static final String COLUMN_ROLE = "role";
     DbHelper dbHelper;
 
     public UserDAO(Context context) {
@@ -29,7 +31,9 @@ public class UserDAO {
         contentValues.put(COLUMN_USERNAME, obj.getUsername());
         contentValues.put(COLUMN_PASSWORD, obj.getPassword());
         contentValues.put(COLUMN_FULLNAME, obj.getFullname());
-        contentValues.put(COLUMN_PHONENUMBER, obj.getPhoneNumber());
+        contentValues.put(COLUMN_EMAIL, obj.getEmail());
+        contentValues.put(COLUMN_PHONE_NUMBER, obj.getPhoneNumber());
+        contentValues.put(COLUMN_ROLE, obj.getRole());
         long check = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         obj.setId_user((int) check);
         return check != -1;
@@ -42,6 +46,20 @@ public class UserDAO {
         return check != -1;
     }
 
+    public boolean update(User obj) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        String dk[] = {String.valueOf(obj.getId_user())};
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_USERNAME, obj.getUsername());
+        contentValues.put(COLUMN_PASSWORD, obj.getPassword());
+        contentValues.put(COLUMN_FULLNAME, obj.getFullname());
+        contentValues.put(COLUMN_EMAIL, obj.getEmail());
+        contentValues.put(COLUMN_PHONE_NUMBER, obj.getPhoneNumber());
+        contentValues.put(COLUMN_ROLE, obj.getRole());
+        long check = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_ID_USER + "= ?", dk);
+        return check != -1;
+    }
+
     public boolean updatePass(User obj) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String dk[] = {String.valueOf(obj.getId_user())};
@@ -49,7 +67,9 @@ public class UserDAO {
         contentValues.put(COLUMN_USERNAME, obj.getUsername());
         contentValues.put(COLUMN_PASSWORD, obj.getPassword());
         contentValues.put(COLUMN_FULLNAME, obj.getFullname());
-        contentValues.put(COLUMN_PHONENUMBER, obj.getPhoneNumber());
+        contentValues.put(COLUMN_EMAIL, obj.getEmail());
+        contentValues.put(COLUMN_PHONE_NUMBER, obj.getPhoneNumber());
+        contentValues.put(COLUMN_ROLE, obj.getRole());
         long check = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_ID_USER + "= ?", dk);
         return check != -1;
     }
@@ -58,16 +78,25 @@ public class UserDAO {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ArrayList<User> list = new ArrayList<>();
         Cursor cursor = sqLiteDatabase.rawQuery(sql, selectionArgs);
-        if (cursor.getCount() > 0) {
-            while ((cursor.moveToNext())) {
-                int idUser = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID_USER));
-                String username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME));
-                String password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD));
-                String fullname = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULLNAME));
-                int phoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PHONENUMBER));
-                list.add(new User(idUser, username, password, fullname, phoneNumber));
+
+        try {
+            if (cursor.getCount() > 0) {
+                while ((cursor.moveToNext())) {
+                    int idUser = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID_USER));
+                    String username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME));
+                    String password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD));
+                    String fullname = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULLNAME));
+                    String email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL));
+                    String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER));
+                    int role = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ROLE));
+                    list.add(new User(idUser, username, password, fullname, email, phoneNumber, role));
+                }
             }
+        } finally {
+            cursor.close();
+            sqLiteDatabase.close();
         }
+
         return list;
     }
 
@@ -87,10 +116,10 @@ public class UserDAO {
         }
     }
 
-    public boolean checkLogin(String username, String password) {
+    public boolean checkLogin(String username, String password, String role) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=?";
-        String[] selectionArgs = new String[]{username, password};
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=? AND " + COLUMN_ROLE + "=?";
+        String[] selectionArgs = new String[]{username, password, role};
         Cursor cursor = sqLiteDatabase.rawQuery(sql, selectionArgs);
 
         try {

@@ -1,19 +1,24 @@
 package fpoly.vunvph33438.vehiclevista;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+
 import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
-import fpoly.vunvph33438.vehiclevista.Fragment.ManageFragment;
+import fpoly.vunvph33438.vehiclevista.Model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     CheckBox chkRememberPass;
     String strUser, strPass;
+    Spinner spinnerRole;
+    String valueRole;
+    int rolePosition;
     UserDAO userDAO;
 
     @Override
@@ -42,10 +50,27 @@ public class LoginActivity extends AppCompatActivity {
         edPassword = findViewById(R.id.edPassword);
         chkRememberPass = findViewById(R.id.chkRememberPass);
         userDAO = new UserDAO(this);
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        edUsername.setText(sharedPreferences.getString("USERNAME", ""));
-        edPassword.setText(sharedPreferences.getString("PASSWORD", ""));
-        chkRememberPass.setChecked(sharedPreferences.getBoolean("REMEMBER", false));
+
+        spinnerRole = findViewById(R.id.spinnerRole);
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Admin");
+        list.add("User");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinnerRole.setAdapter(adapter);
+        readFile();
+        spinnerRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                rolePosition = i;
+                valueRole = list.get(i);
+                Toast.makeText(LoginActivity.this, valueRole, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -56,18 +81,29 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void readFile() {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        edUsername.setText(sharedPreferences.getString("USERNAME", ""));
+        edPassword.setText(sharedPreferences.getString("PASSWORD", ""));
+        chkRememberPass.setChecked(sharedPreferences.getBoolean("REMEMBER", false));
+        spinnerRole.setSelection(sharedPreferences.getInt("ROLE", 0));
+    }
+
     public void checkLogin() {
         strUser = edUsername.getText().toString();
         strPass = edPassword.getText().toString();
         if (strUser.isEmpty() || strPass.isEmpty()) {
             Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
         } else {
-            if (userDAO.checkLogin(strUser, strPass)) {
+            if (userDAO.checkLogin(strUser, strPass, String.valueOf(rolePosition))) {
+                User user = userDAO.selectID(strUser);
+                valueRole = (user.getRole() == 0) ? "admin" : "thuKho";
+
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-                rememberUser(strUser, strPass, chkRememberPass.isChecked());
+                rememberUser(strUser, strPass, chkRememberPass.isChecked(), rolePosition);
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("username", strUser);
+                intent.putExtra("role", valueRole);
                 startActivity(intent);
                 finishAffinity();
             } else {
@@ -76,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void rememberUser(String u, String p, boolean status) {
+    public void rememberUser(String u, String p, boolean status, int rolePosition) {
         SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
         if (!status) {
@@ -85,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             edit.putString("USERNAME", u);
             edit.putString("PASSWORD", p);
             edit.putBoolean("REMEMBER", status);
+            edit.putInt("ROLE", rolePosition);
         }
         edit.apply();
     }

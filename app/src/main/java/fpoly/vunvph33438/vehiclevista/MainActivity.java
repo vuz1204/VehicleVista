@@ -35,15 +35,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("VehicleVista");
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new CarFragment()).commit();
 
         bottomNavigationView = findViewById(R.id.nvBottom);
         Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        if (username.equalsIgnoreCase("admin")) {
+        String role = intent.getStringExtra("role");
+        if (role != null && role.equalsIgnoreCase("admin")) {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_admin);
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new CarFragment()).commit();
         } else {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_user);
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new BrandFragment()).commit();
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {

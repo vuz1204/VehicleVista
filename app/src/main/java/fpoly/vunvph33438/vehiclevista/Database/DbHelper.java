@@ -23,11 +23,13 @@ public class DbHelper extends SQLiteOpenHelper {
                 "username TEXT UNIQUE, " +
                 "password TEXT NOT NULL, " +
                 "fullname TEXT NOT NULL, " +
-                "phoneNumber INTEGER NOT NULL)";
+                "email TEXT NOT NULL, " +
+                "phoneNumber TEXT NOT NULL, " +
+                "role INTEGER NOT NULL)";
         sqLiteDatabase.execSQL(createUserTable);
 
         // Insert a default user
-        String insertDefaultUser = "INSERT INTO User (username, password, fullname, phoneNumber) VALUES ('admin', 'admin', 'Nguyen Van Vu', 345353424)";
+        String insertDefaultUser = "INSERT INTO User (username, password, fullname, email, phoneNumber, role) VALUES ('admin', 'admin', 'Nguyễn Văn Vũ', 'vunvph33438@fpt.edu.vn', '0344398438', 0)";
         sqLiteDatabase.execSQL(insertDefaultUser);
 
         // Create the Brand table
@@ -45,7 +47,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "description TEXT NOT NULL, " +
                 "available BOOLEAN NOT NULL DEFAULT 1, " +
                 "image BLOB, " +
-                "FOREIGN KEY (id_brand) REFERENCES Brand (id_brand))"; 
+                "FOREIGN KEY (id_brand) REFERENCES Brand (id_brand))";
         sqLiteDatabase.execSQL(createCarTable);
 
         // Create the Receipt table
@@ -53,8 +55,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id_receipt INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "id_car INTEGER NOT NULL, " +
                 "id_user INTEGER NOT NULL, " +
-                "rentalStartDate DATE NOT NULL, " +
-                "rentalEndDate DATE NOT NULL, " +
+                "rentalStartDate TEXT NOT NULL, " +
+                "rentalEndDate TEXT NOT NULL, " +
                 "price INTEGER NOT NULL, " +
                 "paymentMethod INTEGER NOT NULL, " +
                 "status BOOLEAN NOT NULL," +

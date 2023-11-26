@@ -43,20 +43,38 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", Context.MODE_PRIVATE);
                 String username = sharedPreferences.getString("USERNAME", "");
-                if (validate() > 0) {
+
+                int validationStatus = validate();
+
+                if (validationStatus > 0) {
                     User user = userDAO.selectID(username);
-                    user.setPassword(edNewPassword.getText().toString());
-                    if (userDAO.updatePass(user)) {
-                        Toast.makeText(ChangePasswordActivity.this, "Change password successful", Toast.LENGTH_SHORT).show();
-                        edOldPassWord.setText("");
-                        edNewPassword.setText("");
-                        edReNewPassword.setText("");
+
+                    if (user != null) {
+                        user.setPassword(edNewPassword.getText().toString());
+
+                        if (userDAO.updatePass(user)) {
+                            Toast.makeText(ChangePasswordActivity.this, "Change password successful", Toast.LENGTH_SHORT).show();
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("PASSWORD", edNewPassword.getText().toString());
+                            editor.apply();
+
+                            clearInputFields();
+                        } else {
+                            Toast.makeText(ChangePasswordActivity.this, "Change password failed", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(ChangePasswordActivity.this, "Change password failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangePasswordActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
+    }
+
+    private void clearInputFields() {
+        edOldPassWord.setText("");
+        edNewPassword.setText("");
+        edReNewPassword.setText("");
     }
 
     public int validate() {
