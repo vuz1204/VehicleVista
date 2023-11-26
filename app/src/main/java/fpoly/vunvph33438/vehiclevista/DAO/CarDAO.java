@@ -93,18 +93,17 @@ public class CarDAO {
                 int price = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PRICE));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION));
                 int available = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_AVAILABLE));
-                String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE));
+                byte[] imageUri = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_IMAGE));
                 list.add(new Car(idCar, idBrand, model, price,description, available, imageUri));
             }
         }
         cursor.close();
         return list;
     }
-    public void insertImg(ActivityResultLauncher<Intent> activityResultLauncher) {
-        Intent myfileintent = new Intent(Intent.ACTION_GET_CONTENT);
-        myfileintent.setType("image/*");
-        activityResultLauncher.launch(myfileintent);
+    public void insertImg(ActivityResultLauncher<String> activityResultLauncher) {
+        activityResultLauncher.launch("image/*");
     }
+
     public void onActivityResult(Uri imageUri, ImageView imageView) {
         try {
             if (context != null) {
@@ -117,10 +116,10 @@ public class CarDAO {
         }
     }
     // Add a new method in CarDAO to save the image URI
-    public boolean updateImageUri(int carId, Uri imageUri) {
+    public boolean updateImageUri(int carId, byte[] image) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_IMAGE, imageUri.toString());
+        values.put(COLUMN_IMAGE, image);
 
         // Update the record with the given carId
         int rowsAffected = db.update(TABLE_NAME, values, COLUMN_ID_CAR + " = ?",

@@ -3,6 +3,7 @@ package fpoly.vunvph33438.vehiclevista.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -28,8 +29,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandSpinner;
 import fpoly.vunvph33438.vehiclevista.Adapter.CarAdapter;
@@ -47,7 +51,6 @@ public class CarFragment extends Fragment {
     Spinner spinnerBrand;
     CheckBox chkAvailable;
     ImageView imgImport;
-    Button btnImportImg;
     BrandDAO brandDAO;
     BrandSpinner brandSpinner;
     int selectedPosition;
@@ -55,13 +58,14 @@ public class CarFragment extends Fragment {
     int idBrand;
     CarAdapter carAdapter;
     private Uri selectedImageUri;
+    private static final int REQUEST_IMAGE_PICKER = 1;
+
 
     private boolean isArray(String str) {
         return str.matches("[a-zA-Z0-9]+");
     }
 
     private static final String TAG = "CarFragment";
-    private static final int REQUEST_IMAGE_PICKER = 1;
 
     public CarFragment() {
         // Required empty public constructor
@@ -102,18 +106,15 @@ public class CarFragment extends Fragment {
         spinnerBrand = view1.findViewById(R.id.spinnerIdBrand);
         imgImport = view1.findViewById(R.id.imgImportCar);
         chkAvailable = view1.findViewById(R.id.chkStatusCar);
-
         imgImport.setOnClickListener(v -> {
             // Request permission and launch image picker
             importImageLauncher.launch("image/*");
         });
         edIdCar.setEnabled(false);
-
         brandDAO = new BrandDAO(context);
         listBrand = brandDAO.selectAll();
         brandSpinner = new BrandSpinner(context, listBrand);
         spinnerBrand.setAdapter(brandSpinner);
-
         if (type != 0) {
             edIdCar.setText(String.valueOf(car.getIdCar()));
             for (int i = 0; i < listBrand.size(); i++) {
@@ -125,11 +126,10 @@ public class CarFragment extends Fragment {
             edModel.setText(car.getModel());
             edPrice.setText(String.valueOf(car.getPrice()));
             edDescription.setText(car.getDescription());
-            chkAvailable.setChecked(car.isAvailable() == 0);
-            chkAvailable.setText(car.isAvailable() == 0 ? "Đang cho thuê xe" : "Có sẵn xe cho thuê");
-            chkAvailable.setTextColor(car.isAvailable() == 0 ? Color.BLUE : Color.BLACK);
-            if (car.getImage() != null && !car.getImage().isEmpty()) {
-                selectedImageUri = Uri.parse(car.getImage());
+
+            String carImage = Arrays.toString(car.getImage());
+            if (carImage != null && !carImage.isEmpty()) {
+                selectedImageUri = Uri.parse(carImage);
                 try {
                     Bitmap selectedImage = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
                     imgImport.setImageBitmap(selectedImage);
@@ -137,7 +137,11 @@ public class CarFragment extends Fragment {
                     e.printStackTrace();
                     Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                // If the image URI is null or empty, you may want to set a default image or show a placeholder
+                imgImport.setImageResource(R.drawable.car);
             }
+
         }
 
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -162,7 +166,6 @@ public class CarFragment extends Fragment {
             String model = edModel.getText().toString();
             String price = edPrice.getText().toString();
             String description = edDescription.getText().toString();
-
             if (validate(model, price, description)) {
                 if (type == 0) {
                     if (isInteger(price)) {
@@ -172,65 +175,57 @@ public class CarFragment extends Fragment {
                         car1.setPrice(Integer.parseInt(price));
                         car1.setDescription(description);
                         car1.setAvailable(chkAvailable.isChecked() ? 0 : 1);
-
-                        Uri imageUri = selectedImageUri != null ? selectedImageUri : Uri.parse("car");
-                        car1.setImage(String.valueOf(imageUri));
-                        int carId = (type == 0) ? 0 : car.getIdCar();
-                        boolean isImageUriSaved = carDAO.updateImageUri(carId, selectedImageUri);
-                        if (isImageUriSaved) {
-                            Toast.makeText(context, "Image URI saved successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Failed to save image URI", Toast.LENGTH_SHORT).show();
-                        }
-
+                        byte[] imageBytes = convertImageUriToByteArray(selectedImageUri);
+                        car1.setImage(imageBytes);
                         try {
                             if (carDAO.insert(car1)) {
-                                Toast.makeText(context, "Added successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), "Added successfully", Toast.LENGTH_SHORT).show();
                                 list.add(car1);
                                 carAdapter.notifyDataSetChanged();
+                                // Use car1.getIdCar() instead of carId
+                                carDAO.updateImageUri(car1.getIdCar(), imageBytes);
                                 alertDialog.dismiss();
                             } else {
-                                Toast.makeText(context, "Add failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), "Add failed", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             Log.e(TAG, "Error while manipulating the database: ", e);
-                            Toast.makeText(context, "Add failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Add failed", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(context, "Invalid price. Please enter a valid number.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Invalid price. Please enter a valid number.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Existing car, perform update
                     car.setIdBrand(idBrand);
                     car.setModel(model);
                     car.setPrice(Integer.parseInt(price));
                     car.setDescription(description);
                     car.setAvailable(chkAvailable.isChecked() ? 0 : 1);
-
-                    Uri imageUri = Uri.parse(getImageUri());
-                    car.setImage(imageUri.toString());
-                    Log.e(TAG, "showAddOrUpdateDialog: " + idBrand);
-
+                    byte[] imageBytes = convertImageUriToByteArray(selectedImageUri);
+                    car.setImage(imageBytes);
                     try {
                         if (carDAO.update(car)) {
-                            Toast.makeText(context, "Edited successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Edited successfully", Toast.LENGTH_SHORT).show();
                             updateList();
+                            carDAO.updateImageUri(car.getIdCar(), imageBytes);
                             alertDialog.dismiss();
                         } else {
-                            Toast.makeText(context, "Edit failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Edit failed", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "Error while manipulating the database: ", e);
-                        Toast.makeText(context, "Edit failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Edit failed", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-
+        view1.findViewById(R.id.btnCancleCar).setOnClickListener(v -> {
+            clearFrom();
+            alertDialog.dismiss();
+        });
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
     }
-
 
     private boolean validate(String model, String price,String description) {
         try {
@@ -254,24 +249,43 @@ public class CarFragment extends Fragment {
             new ActivityResultContracts.GetContent(),
             this::onImagePicked
     );
-    private String getImageUri() {
-        return selectedImageUri != null ? selectedImageUri.toString() : "";
-    }
-
 
     private void onImagePicked(Uri imageUri) {
         // Handle the selected image URI
         selectedImageUri = imageUri;
         if (selectedImageUri != null) {
-            try {
-                Bitmap selectedImage = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
-                imgImport.setImageBitmap(selectedImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
-            }
+            byte[] imageBytes = convertImageUriToByteArray(selectedImageUri);
+            // Set the imageBytes in your ImageView
+            imgImport.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
         }
+    }
 
+
+    private byte[] convertImageUriToByteArray(Uri imageUri) {
+        try {
+            InputStream inputStream = requireContext().getContentResolver().openInputStream(imageUri);
+            if (inputStream != null) {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = inputStream.read(buffer)) != -1) {
+                    byteArrayOutputStream.write(buffer, 0, len);
+                }
+                inputStream.close(); // Close the inputStream
+                return byteArrayOutputStream.toByteArray();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    private void clearFrom() {
+        edIdCar.setText("");
+        edModel.setText("");
+        edPrice.setText("");
+        edDescription.setText("");
     }
     private boolean isInteger(String str) {
         try {

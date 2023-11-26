@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new CarFragment()).commit();
         } else {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_user);
-            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new BrandFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new HomeFragment()).commit();
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
