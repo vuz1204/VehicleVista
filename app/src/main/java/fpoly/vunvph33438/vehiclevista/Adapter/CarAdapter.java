@@ -67,8 +67,14 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 holder.tvAvailable.setTextColor(Color.RED);
                 holder.tvAvailable.setText("UnAvailable");
             }
-            Bitmap bitmap = BitmapFactory.decodeByteArray(car.getImage(), 0, car.getImage().length);
-            holder.imgCar.setImageBitmap(bitmap);
+
+            byte[] imageBytes = car.getImage();
+            if (imageBytes != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                holder.imgCar.setImageBitmap(bitmap);
+            } else {
+                holder.imgCar.setImageResource(R.drawable.logo);
+            }
         }
 
         holder.imgdelete.setOnClickListener(v -> {
@@ -133,20 +139,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             tvAvailable = itemView.findViewById(R.id.tvAvailable);
             imgCar = itemView.findViewById(R.id.imgCar);
             imgdelete = itemView.findViewById(R.id.imgDeleteCar);
-        }
-    }
-    private Bitmap convertFileToBitmap(String filePath) {
-        try {
-            File imgFile = new File(filePath);
-            if (imgFile.exists()) {
-                return BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            } else {
-                Log.e(TAG, "Image file does not exist: " + filePath);
-                return null;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error converting file to Bitmap: " + e.getMessage());
-            return null;
         }
     }
 }

@@ -245,34 +245,44 @@ public class CarFragment extends Fragment {
         list.addAll(carDAO.getAllCars());
         carAdapter.notifyDataSetChanged();
     }
+
     private final ActivityResultLauncher<String> importImageLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
             this::onImagePicked
     );
 
     private void onImagePicked(Uri imageUri) {
-        // Handle the selected image URI
-        selectedImageUri = imageUri;
-        if (selectedImageUri != null) {
+        if (imageUri != null) {
+            selectedImageUri = imageUri;
             byte[] imageBytes = convertImageUriToByteArray(selectedImageUri);
-            // Set the imageBytes in your ImageView
-            imgImport.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
+            if (imageBytes != null) {
+                imgImport.setImageBitmap(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length));
+            } else {
+                Toast.makeText(getActivity(), "Error loading image", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "You have to choose a picture", Toast.LENGTH_SHORT).show();
         }
     }
 
-
     private byte[] convertImageUriToByteArray(Uri imageUri) {
         try {
-            InputStream inputStream = requireContext().getContentResolver().openInputStream(imageUri);
-            if (inputStream != null) {
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int len;
-                while ((len = inputStream.read(buffer)) != -1) {
-                    byteArrayOutputStream.write(buffer, 0, len);
+            if (imageUri != null) {
+                InputStream inputStream = requireContext().getContentResolver().openInputStream(imageUri);
+                if (inputStream != null) {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    while ((len = inputStream.read(buffer)) != -1) {
+                        byteArrayOutputStream.write(buffer, 0, len);
+                    }
+                    inputStream.close();
+                    return byteArrayOutputStream.toByteArray();
+                } else {
+                    Log.e(TAG, "InputStream is null");
                 }
-                inputStream.close(); // Close the inputStream
-                return byteArrayOutputStream.toByteArray();
+            } else {
+                Log.e(TAG, "ImageUri is null");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
@@ -10,25 +10,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:gravity="center">
+
         <ImageView
             android:id="@+id/imgCar"
             android:layout_width="130dp"
-            android:layout_height="130dp" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvIdCar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:text="@string/app_name"
                 android:textSize="14sp"
-                android:text="@string/app_name" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvIdBrandCar"
@@ -38,27 +41,30 @@
                 android:textSize="15sp" />
 
             <TextView
-                    android:id="@+id/tvModel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/app_name"
-                    android:textSize="15sp" />
+                android:id="@+id/tvModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:textSize="15sp" />
+
             <TextView
-                    android:id="@+id/tvPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/app_name" />
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name" />
+
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_gravity="left"
                 android:text="@string/app_name"
                 android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/tvAvailable"
                 android:layout_width="wrap_content"

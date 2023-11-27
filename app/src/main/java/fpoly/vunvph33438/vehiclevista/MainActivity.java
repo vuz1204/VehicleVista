@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         String role = intent.getStringExtra("role");
         if (role != null && role.equalsIgnoreCase("admin")) {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_admin);
-            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new CarFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new BrandFragment()).commit();
         } else {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_user);
             getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new HomeFragment()).commit();

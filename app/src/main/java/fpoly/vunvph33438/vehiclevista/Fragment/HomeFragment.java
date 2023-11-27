@@ -25,6 +25,7 @@ import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.Model.Photo;
 import fpoly.vunvph33438.vehiclevista.R;
+import fpoly.vunvph33438.vehiclevista.SpacesItemDecoration;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class HomeFragment extends Fragment {
@@ -66,15 +67,19 @@ public class HomeFragment extends Fragment {
         brandHomeAdapter = new BrandHomeAdapter(getContext(), listBrand);
         rcvBrandHome.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         rcvBrandHome.setAdapter(brandHomeAdapter);
-        //
         //Đổ dữ liệu lên Car
         rcvCarHome = view.findViewById(R.id.rcvCarHome);
         listCar = new ArrayList<>();
         carDAO = new CarDAO(getContext());
         listCar = carDAO.getAllCars();
         carHomeAdapter = new CarHomeAdapter(getContext(),listCar);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         rcvCarHome.setLayoutManager(gridLayoutManager);
+
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing); 
+        rcvCarHome.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+
         rcvCarHome.setAdapter(carHomeAdapter);
         //
         mListPhotos = getListPhoto();

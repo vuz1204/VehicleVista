@@ -45,21 +45,16 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
     @Override
     public void onBindViewHolder(@NonNull CarHomeViewHolder holder, int position) {
         Car car = list.get(position);
-        String imagePath = Arrays.toString(car.getImage());
-        if (imagePath != null && !imagePath.isEmpty() && holder.imgCarHome != null) {
-            // Check if holder.imgCarHome is not null before loading the image
+
+        // Check if the image array is not null
+        if (car.getImage() != null && car.getImage().length > 0 && holder.imgCarHome != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(car.getImage(), 0, car.getImage().length);
             holder.imgCarHome.setImageBitmap(bitmap);
         } else {
-            // Handle the case where imagePath is null or empty, or holder.imgCarHome is null
-            holder.imgCarHome.setImageResource(R.drawable.car);
-            // Set a default image or handle accordingly
+            holder.imgCarHome.setImageResource(R.drawable.logo);
         }
         holder.tvCarHome.setText(car.getModel());
-
-
     }
-
 
     @Override
     public int getItemCount() {
