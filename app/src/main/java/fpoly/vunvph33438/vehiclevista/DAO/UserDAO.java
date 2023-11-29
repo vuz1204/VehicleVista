@@ -99,6 +99,19 @@ public class UserDAO {
 
         return list;
     }
+    public boolean updatePassForgot(User obj) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        String dk[] = {String.valueOf(obj.getId_user())};
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_USERNAME, obj.getUsername());
+        contentValues.put(COLUMN_PASSWORD, obj.getPassword());
+        contentValues.put(COLUMN_FULLNAME, obj.getFullname());
+        contentValues.put(COLUMN_EMAIL, obj.getEmail());
+        contentValues.put(COLUMN_PHONE_NUMBER, obj.getPhoneNumber());
+        contentValues.put(COLUMN_ROLE, obj.getRole());
+        long check = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_USERNAME + "=?", new String[]{obj.getUsername()});
+        return check != -1;
+    }
 
     public ArrayList<User> selectAll() {
         String sql = "SELECT * FROM " + TABLE_NAME;
@@ -120,6 +133,19 @@ public class UserDAO {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=? AND " + COLUMN_ROLE + "=?";
         String[] selectionArgs = new String[]{username, password, role};
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, selectionArgs);
+
+        try {
+            return cursor.getCount() > 0;
+        } finally {
+            cursor.close();
+            sqLiteDatabase.close();
+        }
+    }
+    public boolean checkInfor(String username, String email) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=? AND " + COLUMN_EMAIL + "=?";
+        String[] selectionArgs = new String[]{username, email};
         Cursor cursor = sqLiteDatabase.rawQuery(sql, selectionArgs);
 
         try {

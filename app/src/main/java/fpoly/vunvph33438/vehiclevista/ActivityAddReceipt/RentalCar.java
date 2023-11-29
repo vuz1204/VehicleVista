@@ -35,6 +35,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
     private ArrayList<Receipt> list = new ArrayList<>();
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         edStartDate.setOnClickListener(v -> showDatePickerDialog(edStartDate));
         edEndDate.setOnClickListener(v -> showDatePickerDialog(edEndDate));
         btnRentalCar.setOnClickListener(v -> rentCar());
+        edIdReceipt.setEnabled(false);
     }
     private void rentCar() {
         int selectedPaymentMethod;
@@ -80,6 +82,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         if (receiptDAO.insert(receipt)) {
             Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
             list.add(receipt);
+
         } else {
             Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show();
         }

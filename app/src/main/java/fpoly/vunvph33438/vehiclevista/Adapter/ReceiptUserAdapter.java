@@ -22,7 +22,12 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     ArrayList<Receipt> list;
     private ItemClickListener itemClickListener;
     ReceiptDAO receiptDAO;
+    private int loggedInUserId;
     private static final String TAG = "ReceiptAdminAdapter";
+    public void setLoggedInUserId(int userId) {
+        this.loggedInUserId = userId;
+        filterReceipts();
+    }
     public void setItemClickListener(ItemClickListener listener) {
         this.itemClickListener = listener;
     }
@@ -42,22 +47,38 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     public void onBindViewHolder(@NonNull ReceiptUserAdapter.ReceiptViewHolder holder, int position) {
         Receipt receipt = list.get(position);
         if (receipt != null) {
-            holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-            holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
-            holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
-            holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
+            // Only display receipts for the logged-in user
+            if (receipt.getId_User() == loggedInUserId) {
+                holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
+                holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
+                holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
+                holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
 
-            if (receipt.getPaymentMethod() == 0) {
-                holder.tvPayment.setTextColor(Color.RED);
-                holder.tvPayment.setText("UnPayment");
+                if (receipt.getPaymentMethod() == 0) {
+                    holder.tvPayment.setTextColor(Color.RED);
+                    holder.tvPayment.setText("UnPayment");
+                } else {
+                    holder.tvPayment.setTextColor(Color.BLUE);
+                    holder.tvPayment.setText("Payment");
+                }
+                holder.tvPrice.setText(String.valueOf(receipt.getPrice()));
             } else {
-                holder.tvPayment.setTextColor(Color.BLUE);
-                holder.tvPayment.setText("Payment");
+                // If the receipt is not for the logged-in user, hide the item or set visibility to GONE
+                holder.itemView.setVisibility(View.GONE);
+                holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }
-            holder.tvPrice.setText(""+receipt.getPrice());
         }
     }
-
+    private void filterReceipts() {
+        ArrayList<Receipt> filteredList = new ArrayList<>();
+        for (Receipt receipt : list) {
+            if (receipt.getId_User() == loggedInUserId) {
+                filteredList.add(receipt);
+            }
+        }
+        list = filteredList;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return list.size();

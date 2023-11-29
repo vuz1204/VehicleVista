@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.nvBottom);
         Intent intent = getIntent();
         String role = intent.getStringExtra("role");
-        int userId = getIntent().getIntExtra("userId", -1);
         if (role != null && role.equalsIgnoreCase("admin")) {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_admin);
             getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new BrandFragment()).commit();
@@ -68,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(manageFragment);
             } else if (itemId == R.id.sub_trangChu) {
                 getSupportActionBar().setTitle("Home");
-                HomeFragment homeFragment = new HomeFragment();
-                replaceFragment(homeFragment);
+                HomeFragment homeFragment1 = new HomeFragment();
+                replaceFragment(homeFragment1);
             } else if (itemId == R.id.nav_lichSuDatXe) {
                 getSupportActionBar().setTitle("Car booking history");
                 CarBookingHistoryFragment carBookingHistoryFragment = new CarBookingHistoryFragment();

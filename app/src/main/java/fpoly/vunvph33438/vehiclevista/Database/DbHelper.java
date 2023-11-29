@@ -30,6 +30,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // Insert a default user
         String insertDefaultUser = "INSERT INTO User (username, password, fullname, email, phoneNumber, role) VALUES ('admin', 'admin', 'Nguyễn Văn Vũ', 'vunvph33438@fpt.edu.vn', '0344398438', 0)";
+
         sqLiteDatabase.execSQL(insertDefaultUser);
 
         // Create the Brand table
@@ -37,6 +38,11 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id_brand INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "brand TEXT NOT NULL)";
         sqLiteDatabase.execSQL(createBrandTable);
+        insertBrands(sqLiteDatabase, "KIA");
+        insertBrands(sqLiteDatabase, "Toyota");
+        insertBrands(sqLiteDatabase, "Mercedes");
+        insertBrands(sqLiteDatabase, "Lamborghini");
+        insertBrands(sqLiteDatabase, "Hyundai");
 
         // Create the Car table
         String createCarTable = "CREATE TABLE Car (" +
@@ -62,6 +68,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (id_car) REFERENCES Car (id_car), " +
                 "FOREIGN KEY (id_user) REFERENCES User (id_user))";
         sqLiteDatabase.execSQL(createReceiptTable);
+    }
+    private void insertBrands(SQLiteDatabase sqLiteDatabase, String brandName) {
+        String insertBrand = "INSERT INTO Brand (brand) VALUES ('" + brandName + "')";
+        sqLiteDatabase.execSQL(insertBrand);
     }
 
     @Override

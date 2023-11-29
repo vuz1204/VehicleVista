@@ -18,6 +18,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import fpoly.vunvph33438.vehiclevista.ActivityAddReceipt.RentalCar;
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandHomeAdapter;
 import fpoly.vunvph33438.vehiclevista.Adapter.CarHomeAdapter;
 import fpoly.vunvph33438.vehiclevista.Adapter.PhotoViewPager2Adapter;

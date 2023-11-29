@@ -41,6 +41,12 @@ public class ReceiptDAO {
         contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
         contentValues.put(COLUMN_PRICE, receipt.getPrice());
         contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
+        if (isIdReceiptExists(receipt.getId_Receipt())) {
+            // Handle the case when id_receipt already exists
+            // You can choose to update the existing record or generate a new id_receipt
+            // For now, I'm just returning false
+            return false;
+        }
         long insertedId = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         sqLiteDatabase.close();
         if (insertedId != -1) {
@@ -62,7 +68,13 @@ public class ReceiptDAO {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String[] whereArgs = {String.valueOf(receipt.getId_Receipt())};
         ContentValues contentValues = new ContentValues();
-
+        contentValues.put(COLUMN_ID_RECEIPT, receipt.getId_Receipt());
+        contentValues.put(COLUMN_ID_CAR, receipt.getId_Car());
+        contentValues.put(COLUMN_ID_USER, receipt.getId_User());
+        contentValues.put(COLUMN_RENTAL_START_DATE, receipt.getRentalStartDate());
+        contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
+        contentValues.put(COLUMN_PRICE, receipt.getPrice());
+        contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
         // Update paymentMethod based on the boolean value
         int paymentMethodValue = isPayment ? 1 : 0;
         contentValues.put(COLUMN_PAYMENT_METHOD, paymentMethodValue);
@@ -97,5 +109,12 @@ public class ReceiptDAO {
         cursor.close();
         return list;
     }
-
+    private boolean isIdReceiptExists(int idReceipt) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT " + COLUMN_ID_RECEIPT + " FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_RECEIPT + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idReceipt)});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
 }

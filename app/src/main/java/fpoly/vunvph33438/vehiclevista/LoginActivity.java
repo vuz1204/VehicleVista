@@ -1,5 +1,6 @@
 package fpoly.vunvph33438.vehiclevista;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,12 +12,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import fpoly.vunvph33438.vehiclevista.ActivityAddReceipt.RentalCar;
 import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 
@@ -24,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     LinearLayout layoutSignUp;
     EditText edUsername, edPassword;
+    TextView tvForgotPassLogin;
     Button btnLogin;
     CheckBox chkRememberPass;
     String strUser, strPass;
@@ -32,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     int rolePosition;
     UserDAO userDAO;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         edUsername = findViewById(R.id.edUsername);
         edPassword = findViewById(R.id.edPassword);
         chkRememberPass = findViewById(R.id.chkRememberPass);
+        tvForgotPassLogin = findViewById(R.id.tvForgotPassLogin);
         userDAO = new UserDAO(this);
 
         spinnerRole = findViewById(R.id.spinnerRole);
@@ -69,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+        tvForgotPassLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
+                startActivity(intent);
             }
         });
 
@@ -98,12 +111,15 @@ public class LoginActivity extends AppCompatActivity {
             if (userDAO.checkLogin(strUser, strPass, String.valueOf(rolePosition))) {
                 User user = userDAO.selectID(strUser);
                 valueRole = (user.getRole() == 0) ? "admin" : "thuKho";
-
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
                 rememberUser(strUser, strPass, chkRememberPass.isChecked(), rolePosition);
-
+                if(user.getRole()==1){
+                    Intent intent = new Intent(getApplicationContext(), RentalCar.class);
+                    intent.putExtra("userId", user.getId_user());
+                    startActivity(intent);
+                    finishAffinity();
+                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("userId", user.getId_user());
                 intent.putExtra("role", valueRole);
                 startActivity(intent);
                 finishAffinity();

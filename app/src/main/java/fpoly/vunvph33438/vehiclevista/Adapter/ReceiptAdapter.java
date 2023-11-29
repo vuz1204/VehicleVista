@@ -1,17 +1,11 @@
 package fpoly.vunvph33438.vehiclevista.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,31 +14,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import fpoly.vunvph33438.vehiclevista.DAO.BrandDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
-import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder> {
+    private static final String TAG = "ReceiptAdminAdapter";
     Context context;
     ArrayList<Receipt> list;
-    private ItemClickListener itemClickListener;
     ReceiptDAO receiptDAO;
-    private static final String TAG = "ReceiptAdminAdapter";
-    public void setItemClickListener(ItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
+    private ItemClickListener itemClickListener;
+
     public ReceiptAdapter(Context context, ArrayList<Receipt> list) {
         this.context = context;
         this.list = list;
         receiptDAO = new ReceiptDAO(context);
     }
+
+    public void setItemClickListener(ItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
     @NonNull
     @Override
     public ReceiptAdapter.ReceiptViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -72,10 +65,11 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
                 holder.tvPayment.setTextColor(Color.BLUE);
                 holder.tvPayment.setText("Payment");
             }
-            holder.tvPrice.setText(""+receipt.getPrice());
+            holder.tvPrice.setText("" + receipt.getPrice());
         }
         setupLongClickDialog(holder.itemView, receipt);
     }
+
     private void setupLongClickDialog(View view, Receipt receipt) {
         view.setOnLongClickListener(v -> {
             showReceiptDialog(receipt);
@@ -93,14 +87,14 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         // Set the initial state of the checkbox based on the current payment method
         cboReceipt.setChecked(receipt.getPaymentMethod() == 1);
 
+
         view.findViewById(R.id.btnSaveReceipt).setOnClickListener(v -> {
             // Update the payment method based on checkbox state
-            boolean isPayment = cboReceipt.isChecked();
-            boolean isSuccess = receiptDAO.updatePaymentMethod(receipt, isPayment);
 
-            if (isSuccess) {
+            boolean isPayment = cboReceipt.isChecked();
+
+            if (receiptDAO.updatePaymentMethod(receipt, isPayment)) {
                 Toast.makeText(context, "Payment method updated successfully", Toast.LENGTH_SHORT).show();
-                // You may need to update your dataset and refresh the RecyclerView here
                 notifyDataSetChanged(); // Notify the adapter that the dataset has changed
             } else {
                 Toast.makeText(context, "Failed to update payment method", Toast.LENGTH_SHORT).show();
@@ -122,7 +116,8 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     }
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder {
-        TextView tvIdReceipt, tvIdCar,tvIdUser, tvStartDate, tvEndDate,tvPayment, tvPrice;
+        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice;
+
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIdReceipt = itemView.findViewById(R.id.tvIdReceiptAdmin);
@@ -133,5 +128,6 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             tvPayment = itemView.findViewById(R.id.tvPaymentMethodAdmin);
             tvPrice = itemView.findViewById(R.id.tvPriceReceiptAdmin);
         }
+
     }
 }
