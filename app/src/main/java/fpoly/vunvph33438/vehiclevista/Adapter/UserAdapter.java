@@ -68,6 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_user, null);
         builder.setView(dialogView);
+
         AlertDialog alertDialog = builder.create();
 
         edIdUser = dialogView.findViewById(R.id.edIdUser);
@@ -90,16 +91,33 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         dialogView.findViewById(R.id.btnSaveUser).setOnClickListener(v -> {
             String fullname = edFullnameUser.getText().toString().trim();
             String email = edEmailUser.getText().toString().trim();
-            String phoneNumber = edPhoneNumberUser.getText().toString().trim();
+            String phoneNumberStr = edPhoneNumberUser.getText().toString().trim();
             String password = edPasswordUser.getText().toString().trim();
 
-            if (fullname.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || password.isEmpty()) {
+            if (fullname.isEmpty() || email.isEmpty() || phoneNumberStr.isEmpty() || password.isEmpty()) {
                 Toast.makeText(context, "Please enter complete information", Toast.LENGTH_SHORT).show();
             } else {
+                try {
+                    int phoneNumber = Integer.parseInt(phoneNumberStr);
+
+                     if (!isValidEmail(email)) {
+                        Toast.makeText(context, "Invalid email address", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (phoneNumber < 1000000 || phoneNumber > 99999999999L) {
+                        Toast.makeText(context, "Phone number must be between 7 and 11 digits", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (password.length() < 6) {
+                        Toast.makeText(context, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(context, "Invalid phone number. Please enter a valid number.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 User user = list.get(position);
                 user.setFullname(fullname);
                 user.setEmail(email);
-                user.setPhoneNumber(phoneNumber);
+                user.setPhoneNumber(phoneNumberStr);
                 user.setPassword(password);
                 try {
                     if (userDAO.update(user)) {
@@ -122,6 +140,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}";
+        return email.matches(emailPattern);
     }
 
     public void showDeleteDialog(int position, String loggedInUsername) {

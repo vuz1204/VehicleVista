@@ -18,7 +18,7 @@
             android:background="@drawable/background_textview"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text="Thủ kho"
+            android:text="User"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />

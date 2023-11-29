@@ -16,6 +16,8 @@ import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
 import fpoly.vunvph33438.vehiclevista.LoginActivity;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 import fpoly.vunvph33438.vehiclevista.R;
+import fpoly.vunvph33438.vehiclevista.UpdateProfileActivity;
+import fpoly.vunvph33438.vehiclevista.UserManagementActivity;
 
 public class AccountFragment extends Fragment {
 
@@ -48,7 +50,8 @@ public class AccountFragment extends Fragment {
         tvEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), UpdateProfileActivity.class);
+                startActivity(intent);
             }
         });
 
