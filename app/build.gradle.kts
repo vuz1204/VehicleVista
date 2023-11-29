@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "fpoly.vunvph33438.vehiclevista"
         minSdk = 30
-        targetSdk = 33 // Change this to 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 

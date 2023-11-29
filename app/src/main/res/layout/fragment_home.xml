@@ -20,13 +20,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edSearchCarUser"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_search"
-                android:hint="Search"
-                android:padding="10dp" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edSearchCarUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Search"
+                    android:drawableEnd="@drawable/ic_search"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

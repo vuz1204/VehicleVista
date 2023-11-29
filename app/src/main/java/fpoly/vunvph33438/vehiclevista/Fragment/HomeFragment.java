@@ -1,5 +1,6 @@
 package fpoly.vunvph33438.vehiclevista.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.Model.Photo;
 import fpoly.vunvph33438.vehiclevista.R;
+import fpoly.vunvph33438.vehiclevista.SearchActivity;
 import fpoly.vunvph33438.vehiclevista.SpacesItemDecoration;
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -34,9 +37,9 @@ public class HomeFragment extends Fragment {
     CarHomeAdapter carHomeAdapter;
     BrandDAO brandDAO;
     CarDAO carDAO;
-    LinearLayoutManager linearLayoutManager;
     ArrayList<Brand> listBrand;
     ArrayList<Car> listCar;
+    EditText edSearchCarUser;
     View view;
     private ViewPager2 mViewPager2;
     private CircleIndicator3 mCircleIndicator3;
@@ -59,6 +62,16 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         mViewPager2 = view.findViewById(R.id.viewPager2);
         mCircleIndicator3 = view.findViewById(R.id.circleIndicator3);
+
+        edSearchCarUser = view.findViewById(R.id.edSearchCarUser);
+        edSearchCarUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //Đổ dữ liệu lên Brand
         rcvBrandHome = view.findViewById(R.id.rcvBrandHome);
         listBrand = new ArrayList<>();
@@ -67,6 +80,7 @@ public class HomeFragment extends Fragment {
         brandHomeAdapter = new BrandHomeAdapter(getContext(), listBrand);
         rcvBrandHome.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         rcvBrandHome.setAdapter(brandHomeAdapter);
+
         //Đổ dữ liệu lên Car
         rcvCarHome = view.findViewById(R.id.rcvCarHome);
         listCar = new ArrayList<>();
@@ -77,11 +91,10 @@ public class HomeFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         rcvCarHome.setLayoutManager(gridLayoutManager);
 
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing); 
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         rcvCarHome.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
         rcvCarHome.setAdapter(carHomeAdapter);
-        //
+
         mListPhotos = getListPhoto();
         PhotoViewPager2Adapter adapter = new PhotoViewPager2Adapter(mListPhotos);
         mViewPager2.setAdapter(adapter);
@@ -102,10 +115,10 @@ public class HomeFragment extends Fragment {
 
     private List<Photo> getListPhoto() {
         List<Photo> list = new ArrayList<>();
-        list.add(new Photo(R.drawable.avatar_default));
-        list.add(new Photo(R.drawable.car));
         list.add(new Photo(R.drawable.logo));
-        list.add(new Photo(R.drawable.reset_password));
+        list.add(new Photo(R.drawable.car1_slider));
+        list.add(new Photo(R.drawable.car2_slider));
+        list.add(new Photo(R.drawable.car3_slider));
 
         return list;
     }

@@ -7,24 +7,21 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.squareup.picasso.Picasso;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
@@ -32,18 +29,25 @@ import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
+
     Context context;
     ArrayList<Car> list;
+    ArrayList<Car> listOld;
     CarDAO carDAO;
+
     private ItemClickListener itemClickListener;
-    public void setItemClickListener(ItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
+
     public CarAdapter(Context context, ArrayList<Car> list) {
         this.context = context;
         this.list = list;
+        this.listOld = list;
         carDAO = new CarDAO(context);
     }
+
+    public void setItemClickListener(ItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
     @NonNull
     @Override
     public CarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,6 +58,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CarViewHolder holder, int position) {
         Car car = list.get(position);
+
         if (car != null) {
             holder.tvIdCar.setText("ID Car :" + car.getIdCar());
             holder.tvIdBrand.setText("ID Brand :" + car.getIdBrand());
@@ -119,6 +124,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             Log.e(TAG, "Invalid position: " + position);
         }
     }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -126,8 +132,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
     class CarViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvIdCar, tvIdBrand, tvModel, tvPrice,tvDescription, tvAvailable;
-        ImageView imgCar,imgdelete;
+        TextView tvIdCar, tvIdBrand, tvModel, tvPrice, tvDescription, tvAvailable;
+        ImageView imgCar, imgdelete;
 
         public CarViewHolder(@NonNull View itemView) {
             super(itemView);
