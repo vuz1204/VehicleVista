@@ -4,6 +4,7 @@ package fpoly.vunvph33438.vehiclevista.DAO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -34,28 +35,24 @@ public class ReceiptDAO {
     public boolean insert(Receipt receipt) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ID_RECEIPT, receipt.getId_Receipt());
         contentValues.put(COLUMN_ID_CAR, receipt.getId_Car());
         contentValues.put(COLUMN_ID_USER, receipt.getId_User());
         contentValues.put(COLUMN_RENTAL_START_DATE, receipt.getRentalStartDate());
         contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
         contentValues.put(COLUMN_PRICE, receipt.getPrice());
         contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
-        if (isIdReceiptExists(receipt.getId_Receipt())) {
-            // Handle the case when id_receipt already exists
-            // You can choose to update the existing record or generate a new id_receipt
-            // For now, I'm just returning false
-            return false;
-        }
-        long insertedId = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-        sqLiteDatabase.close();
-        if (insertedId != -1) {
+        try {
+            long insertedId = sqLiteDatabase.insertOrThrow(TABLE_NAME, null, contentValues);
             receipt.setId_Receipt((int) insertedId);
             return true;
-        } else {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
+        } finally {
+            sqLiteDatabase.close();
         }
     }
+
 
     public boolean delete(Receipt receipt) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();

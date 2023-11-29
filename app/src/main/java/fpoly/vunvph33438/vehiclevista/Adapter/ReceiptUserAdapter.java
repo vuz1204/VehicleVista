@@ -1,6 +1,7 @@
 package fpoly.vunvph33438.vehiclevista.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,17 +24,16 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     private ItemClickListener itemClickListener;
     ReceiptDAO receiptDAO;
     private int loggedInUserId;
+
     private static final String TAG = "ReceiptAdminAdapter";
-    public void setLoggedInUserId(int userId) {
-        this.loggedInUserId = userId;
-        filterReceipts();
-    }
+
     public void setItemClickListener(ItemClickListener listener) {
         this.itemClickListener = listener;
     }
-    public ReceiptUserAdapter(Context context, ArrayList<Receipt> list) {
+    public ReceiptUserAdapter(Context context, ArrayList<Receipt> list,int loggedInUserId) {
         this.context = context;
         this.list = list;
+        this.loggedInUserId = loggedInUserId;
         receiptDAO = new ReceiptDAO(context);
     }
     @NonNull
@@ -69,16 +69,8 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
             }
         }
     }
-    private void filterReceipts() {
-        ArrayList<Receipt> filteredList = new ArrayList<>();
-        for (Receipt receipt : list) {
-            if (receipt.getId_User() == loggedInUserId) {
-                filteredList.add(receipt);
-            }
-        }
-        list = filteredList;
-        notifyDataSetChanged();
-    }
+
+
     @Override
     public int getItemCount() {
         return list.size();

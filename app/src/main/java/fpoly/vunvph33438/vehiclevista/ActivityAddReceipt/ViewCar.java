@@ -53,10 +53,14 @@ public class ViewCar extends AppCompatActivity {
             btnRentalViewCar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ViewCar.this, RentalCar.class);
-                    intent.putExtra("carId", car.getIdCar());
-                    intent.putExtra("carPrice", car.getPrice());
-                    startActivity(intent);
+                   if (car.isAvailable()==0){
+                       Intent intent = new Intent(ViewCar.this, RentalCar.class);
+                       intent.putExtra("carId", car.getIdCar());
+                       intent.putExtra("carPrice", car.getPrice());
+                       startActivity(intent);
+                   }else {
+                       Toast.makeText(ViewCar.this, "The car is being rented", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         } else {

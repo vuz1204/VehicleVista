@@ -113,13 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                 valueRole = (user.getRole() == 0) ? "admin" : "thuKho";
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
                 rememberUser(strUser, strPass, chkRememberPass.isChecked(), rolePosition);
-                if(user.getRole()==1){
-                    Intent intent = new Intent(getApplicationContext(), RentalCar.class);
-                    intent.putExtra("userId", user.getId_user());
-                    startActivity(intent);
-                    finishAffinity();
-                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                saveUserIdToSharedPreferences(user.getId_user());
                 intent.putExtra("role", valueRole);
                 startActivity(intent);
                 finishAffinity();
@@ -141,5 +136,16 @@ public class LoginActivity extends AppCompatActivity {
             edit.putInt("ROLE", rolePosition);
         }
         edit.apply();
+    }
+    private void saveUserIdToSharedPreferences(int userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("USER_ID", userId);
+        editor.apply();
+    }
+
+    private int retrieveUserIdFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        return sharedPreferences.getInt("USER_ID", -1);
     }
 }

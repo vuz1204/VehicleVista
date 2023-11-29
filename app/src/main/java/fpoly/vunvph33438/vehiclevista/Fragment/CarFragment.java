@@ -182,7 +182,6 @@ public class CarFragment extends Fragment {
                                 Toast.makeText(requireContext(), "Added successfully", Toast.LENGTH_SHORT).show();
                                 list.add(car1);
                                 carAdapter.notifyDataSetChanged();
-                                // Use car1.getIdCar() instead of carId
                                 carDAO.updateImageUri(car1.getIdCar(), imageBytes);
                                 alertDialog.dismiss();
                             } else {

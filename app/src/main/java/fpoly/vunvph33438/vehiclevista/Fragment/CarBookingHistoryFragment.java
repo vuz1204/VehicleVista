@@ -1,6 +1,8 @@
 package fpoly.vunvph33438.vehiclevista.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -39,9 +41,13 @@ public class CarBookingHistoryFragment extends Fragment {
         rcvReceipt = view.findViewById(R.id.rcvCarBookingHistory);
         receiptDAO = new ReceiptDAO(getContext());
         list = receiptDAO.selectID();
-        receiptUserAdapter = new ReceiptUserAdapter(getContext(),list);
+        receiptUserAdapter = new ReceiptUserAdapter(getContext(), list, getLoggedInUserId());
         rcvReceipt.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvReceipt.setAdapter(receiptUserAdapter);
         return view;
+    }
+    private int getLoggedInUserId() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("USER_FILE", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("USER_ID", -1);
     }
 }
