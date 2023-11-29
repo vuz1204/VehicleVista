@@ -2,28 +2,26 @@ package fpoly.vunvph33438.vehiclevista.Model;
 
 import java.util.Date;
 
-public class HoaDon {
+public class Receipt {
         private int id_Receipt;
         private int id_Car;
         private int id_User;
-        private Date rentalStartDate;
-        private Date rentalEndDate;
+        private String rentalStartDate;
+        private String rentalEndDate;
         private int price;
         private int paymentMethod;
-        private boolean status;
 
-    public HoaDon() {
+    public Receipt() {
     }
 
-    public HoaDon(int id_Receipt, int id_Car, int id_User, Date rentalStartDate, Date rentalEndDate, int price, int paymentMethod, boolean status) {
+    public Receipt(int id_Receipt, int id_Car, int id_User, String rentalStartDate, String rentalEndDate, int paymentMethod, int price) {
         this.id_Receipt = id_Receipt;
         this.id_Car = id_Car;
         this.id_User = id_User;
         this.rentalStartDate = rentalStartDate;
         this.rentalEndDate = rentalEndDate;
-        this.price = price;
         this.paymentMethod = paymentMethod;
-        this.status = status;
+        this.price = price;
     }
 
     public int getId_Receipt() {
@@ -50,19 +48,19 @@ public class HoaDon {
         this.id_User = id_User;
     }
 
-    public Date getRentalStartDate() {
+    public String getRentalStartDate() {
         return rentalStartDate;
     }
 
-    public void setRentalStartDate(Date rentalStartDate) {
+    public void setRentalStartDate(String rentalStartDate) {
         this.rentalStartDate = rentalStartDate;
     }
 
-    public Date getRentalEndDate() {
+    public String getRentalEndDate() {
         return rentalEndDate;
     }
 
-    public void setRentalEndDate(Date rentalEndDate) {
+    public void setRentalEndDate(String rentalEndDate) {
         this.rentalEndDate = rentalEndDate;
     }
 
@@ -82,11 +80,5 @@ public class HoaDon {
         this.paymentMethod = paymentMethod;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }

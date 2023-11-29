@@ -1,6 +1,7 @@
 package fpoly.vunvph33438.vehiclevista.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import fpoly.vunvph33438.vehiclevista.ActivityAddReceipt.ViewCar;
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
@@ -56,6 +58,12 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
             holder.imgCarHome.setImageResource(R.drawable.logo);
         }
         holder.tvCarHome.setText(car.getModel());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startViewCarActivity(car);
+            }
+        });
     }
 
     @Override
@@ -106,5 +114,12 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
             tvCarHome = itemView.findViewById(R.id.tvCarHome);
         }
 
+    }
+    private void startViewCarActivity(Car car) {
+        // You need to pass necessary data to the ViewCar activity, such as car ID or other relevant information
+        // For example, you can use Intent to pass data
+        Intent intent = new Intent(context, ViewCar.class);
+        intent.putExtra("carId", car.getIdCar()); // Assuming car has an ID field
+        context.startActivity(intent);
     }
 }

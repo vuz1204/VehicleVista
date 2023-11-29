@@ -46,14 +46,11 @@ public class CarDAO {
         contentValues.put(COLUMN_AVAILABLE, car.isAvailable());
         contentValues.put(COLUMN_IMAGE, car.getImage());
         long insertedId = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-        // Close the database after the operation
         sqLiteDatabase.close();
         if (insertedId != -1) {
-            // Insertion was successful, set the ID to the Car object
             car.setIdCar((int) insertedId);
             return true;
         } else {
-            // Insertion failed
             return false;
         }
     }
@@ -129,6 +126,11 @@ public class CarDAO {
 
         // Return true if the update was successful
         return rowsAffected > 0;
+    }
+    public Car getCarById(int carId) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_CAR + " = ?";
+        ArrayList<Car> carList = getAll(sql, String.valueOf(carId));
+        return carList.isEmpty() ? null : carList.get(0);
     }
 
 

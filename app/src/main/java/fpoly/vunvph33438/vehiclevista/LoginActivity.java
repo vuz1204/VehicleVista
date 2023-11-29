@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 rememberUser(strUser, strPass, chkRememberPass.isChecked(), rolePosition);
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("userId", user.getId_user());
                 intent.putExtra("role", valueRole);
                 startActivity(intent);
                 finishAffinity();

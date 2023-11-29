@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.nvBottom);
         Intent intent = getIntent();
         String role = intent.getStringExtra("role");
+        int userId = getIntent().getIntExtra("userId", -1);
         if (role != null && role.equalsIgnoreCase("admin")) {
             bottomNavigationView.inflateMenu(R.menu.drawer_view_admin);
             getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new BrandFragment()).commit();

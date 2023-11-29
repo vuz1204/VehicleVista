@@ -19,6 +19,12 @@
             android:name=".SearchActivity"
             android:exported="false" />
         <activity
+            android:name=".ActivityAddReceipt.RentalCar"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityAddReceipt.ViewCar"
+            android:exported="false" />
+        <activity
             android:name=".UserManagementActivity"
             android:exported="false" />
         <activity
