@@ -132,6 +132,22 @@ public class CarDAO {
         ArrayList<Car> carList = getAll(sql, String.valueOf(carId));
         return carList.isEmpty() ? null : carList.get(0);
     }
+    public String getCarNameById(int carId) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        String[] columns = {COLUMN_MODEL}; // Assuming the name of the car is stored in the 'model' column
+        String selection = COLUMN_ID_CAR + "=?";
+        String[] selectionArgs = {String.valueOf(carId)};
+
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+        String carName = null;
+        if (cursor.moveToFirst()) {
+            carName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MODEL));
+        }
+
+        cursor.close();
+        return carName;
+    }
 
 
 }

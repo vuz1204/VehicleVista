@@ -64,5 +64,21 @@ public class BrandDAO {
         ArrayList<Brand> list = getAll(sql, id);
         return list.isEmpty() ? null : list.get(0);
     }
+    public String getBrandNameById(int idBrand) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        String[] columns = {COLUMN_BRAND}; // Assuming the name of the car is stored in the 'model' column
+        String selection = COLUMN_ID_BRAND + "=?";
+        String[] selectionArgs = {String.valueOf(idBrand)};
+
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+        String brandName = null;
+        if (cursor.moveToFirst()) {
+            brandName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRAND));
+        }
+
+        cursor.close();
+        return brandName;
+    }
 
 }
