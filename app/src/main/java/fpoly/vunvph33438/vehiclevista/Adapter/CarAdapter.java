@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import fpoly.vunvph33438.vehiclevista.DAO.BrandDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
@@ -34,6 +35,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     ArrayList<Car> list;
     ArrayList<Car> listOld;
     CarDAO carDAO;
+    BrandDAO brandDAO;
 
     private ItemClickListener itemClickListener;
 
@@ -42,6 +44,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         this.list = list;
         this.listOld = list;
         carDAO = new CarDAO(context);
+        brandDAO = new BrandDAO(context);
     }
 
     public void setItemClickListener(ItemClickListener listener) {
@@ -60,8 +63,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         Car car = list.get(position);
 
         if (car != null) {
+            int idBrand = car.getIdBrand();
+            String brandName = brandDAO.getBrandNameById(idBrand);
             holder.tvIdCar.setText("ID Car :" + car.getIdCar());
-            holder.tvIdBrand.setText("ID Brand :" + car.getIdBrand());
+            holder.tvIdBrand.setText("ID Brand :" + brandName);
             holder.tvModel.setText("Model :" + car.getModel());
             holder.tvPrice.setText("Price :" + car.getPrice());
             holder.tvDescription.setText("Description :" + car.getDescription());

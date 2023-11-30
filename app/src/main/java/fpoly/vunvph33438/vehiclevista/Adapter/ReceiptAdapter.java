@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
@@ -26,12 +27,14 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     Context context;
     ArrayList<Receipt> list;
     ReceiptDAO receiptDAO;
+    CarDAO carDAO;
     private ItemClickListener itemClickListener;
 
     public ReceiptAdapter(Context context, ArrayList<Receipt> list) {
         this.context = context;
         this.list = list;
         receiptDAO = new ReceiptDAO(context);
+        carDAO = new CarDAO(context);
     }
 
     public void setItemClickListener(ItemClickListener listener) {
@@ -49,15 +52,13 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     public void onBindViewHolder(@NonNull ReceiptAdapter.ReceiptViewHolder holder, int position) {
         Receipt receipt = list.get(position);
         if (receipt != null) {
+            int carId = receipt.getId_Car();
+            String carName = carDAO.getCarNameById(carId);
             holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-            holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
-
-            // Fetch and display the username
-            holder.tvIdUser.setText("Username: " + receipt.getId_User());
-
+            holder.tvIdCar.setText("Model :" + carName);
+            holder.tvIdUser.setText("ID User: " + receipt.getId_User());
             holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
             holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
-
             if (receipt.getPaymentMethod() == 0) {
                 holder.tvPayment.setTextColor(Color.RED);
                 holder.tvPayment.setText("UnPayment");
