@@ -47,7 +47,6 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     public void onBindViewHolder(@NonNull ReceiptUserAdapter.ReceiptViewHolder holder, int position) {
         Receipt receipt = list.get(position);
         if (receipt != null) {
-            // Only display receipts for the logged-in user
             if (receipt.getId_User() == loggedInUserId) {
                 holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
                 holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
@@ -63,7 +62,6 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
                 }
                 holder.tvPrice.setText(String.valueOf(receipt.getPrice()));
             } else {
-                // If the receipt is not for the logged-in user, hide the item or set visibility to GONE
                 holder.itemView.setVisibility(View.GONE);
                 holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }

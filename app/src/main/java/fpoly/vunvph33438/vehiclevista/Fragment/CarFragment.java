@@ -135,10 +135,8 @@ public class CarFragment extends Fragment {
                     imgImport.setImageBitmap(selectedImage);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                // If the image URI is null or empty, you may want to set a default image or show a placeholder
                 imgImport.setImageResource(R.drawable.car);
             }
 

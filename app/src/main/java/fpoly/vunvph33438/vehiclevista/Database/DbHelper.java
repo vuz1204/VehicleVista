@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "VehicleVista.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     public DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -69,6 +69,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (id_user) REFERENCES User (id_user))";
         sqLiteDatabase.execSQL(createReceiptTable);
     }
+
     private void insertBrands(SQLiteDatabase sqLiteDatabase, String brandName) {
         String insertBrand = "INSERT INTO Brand (brand) VALUES ('" + brandName + "')";
         sqLiteDatabase.execSQL(insertBrand);
