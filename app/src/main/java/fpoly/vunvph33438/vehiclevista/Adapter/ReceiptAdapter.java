@@ -68,6 +68,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             }
             holder.tvPrice.setText("" + receipt.getPrice());
         }
+        holder.tvDate.setText("Date: " +receipt.getDate());
         setupLongClickDialog(holder.itemView, receipt);
     }
 
@@ -117,7 +118,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     }
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder {
-        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice;
+        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice,tvDate;
 
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,6 +129,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             tvEndDate = itemView.findViewById(R.id.tvRentalEndDateAdmin);
             tvPayment = itemView.findViewById(R.id.tvPaymentMethodAdmin);
             tvPrice = itemView.findViewById(R.id.tvPriceReceiptAdmin);
+            tvDate = itemView.findViewById(R.id.tvDateReceipt);
         }
 
     }

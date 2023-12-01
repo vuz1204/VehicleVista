@@ -44,22 +44,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Rental Start Date:"
+                    android:text="Rental Start Date: "
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvRentalEndDateAdmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Rental End Date:"
+                    android:text="Rental End Date: "
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvPaymentMethodAdmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Payment Method:"
+                    android:text="Payment Method: "
                     android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvDateReceipt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Date: "
+                android:textStyle="bold" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
