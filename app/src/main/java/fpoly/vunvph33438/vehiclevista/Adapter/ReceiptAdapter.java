@@ -55,7 +55,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             holder.tvIdUser.setText("Username: " + receipt.getId_User());
 
             holder.tvStartDate.setText("Start Date: " + receipt.getRentalStartDate());
-            holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
+            holder.tvEndDate.setText("End Date: " + receipt.getRentalEndDate());
 
             if (receipt.getPaymentMethod() == 0) {
                 holder.tvPayment.setTextColor(Color.RED);

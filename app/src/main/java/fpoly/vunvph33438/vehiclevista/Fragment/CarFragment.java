@@ -139,11 +139,14 @@ public class CarFragment extends Fragment {
         spinnerBrand = view1.findViewById(R.id.spinnerIdBrand);
         imgImport = view1.findViewById(R.id.imgImportCar);
         chkAvailable = view1.findViewById(R.id.chkStatusCar);
+
         imgImport.setOnClickListener(v -> {
-            // Request permission and launch image picker
             importImageLauncher.launch("image/*");
         });
+
         edIdCar.setEnabled(false);
+        chkAvailable.setChecked(true);
+
         brandDAO = new BrandDAO(context);
         listBrand = brandDAO.selectAll();
         brandSpinner = new BrandSpinner(context, listBrand);

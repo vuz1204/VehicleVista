@@ -16,7 +16,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     EditText edUsernameSU, edFullnameSU, edEmailSU, edPhoneNumberSU, edPasswordSU, edRePassword;
     int rolePosition = 1;
-    Button btnSignUp;
+    Button btnSignUp, btnReturn;
     UserDAO userDAO;
 
     @Override
@@ -58,6 +58,11 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnReturn = findViewById(R.id.btnReturn);
+        btnReturn.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void clearInputFields() {
@@ -92,8 +97,8 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (!isValidEmail(email)) {
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show();
                     check = -1;
-                } else if (!isValidPhoneNumber(String.valueOf(phoneNumber))) {
-                    Toast.makeText(this, "Phone number must be between 7 and 11 digits and start with 0", Toast.LENGTH_SHORT).show();
+                } else if (phoneNumber < 1000000 || phoneNumber > 99999999999L) {
+                    Toast.makeText(this, "Phone number must be between 7 and 11 digits", Toast.LENGTH_SHORT).show();
                     check = -1;
                 } else if (password.length() < 6) {
                     Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
@@ -113,10 +118,5 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean isValidEmail(String email) {
         String emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}";
         return email.matches(emailPattern);
-    }
-
-    private boolean isValidPhoneNumber(String phoneNumber) {
-        String phoneNumberPattern = "0[0-9]{6,10}";
-        return phoneNumber.matches(phoneNumberPattern);
     }
 }
