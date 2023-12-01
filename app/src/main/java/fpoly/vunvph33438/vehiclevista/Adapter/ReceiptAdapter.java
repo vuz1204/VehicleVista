@@ -49,13 +49,12 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     public void onBindViewHolder(@NonNull ReceiptAdapter.ReceiptViewHolder holder, int position) {
         Receipt receipt = list.get(position);
         if (receipt != null) {
-            holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-            holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
+            holder.tvIdReceipt.setText("ID Receipt: " + receipt.getId_Receipt());
+            holder.tvIdCar.setText("ID Car: " + receipt.getId_Car());
 
-            // Fetch and display the username
             holder.tvIdUser.setText("Username: " + receipt.getId_User());
 
-            holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
+            holder.tvStartDate.setText("Start Date: " + receipt.getRentalStartDate());
             holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
 
             if (receipt.getPaymentMethod() == 0) {
@@ -84,18 +83,15 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         AlertDialog alertDialog = builder.create();
         CheckBox cboReceipt = view.findViewById(R.id.cboPaymentReceipt);
 
-        // Set the initial state of the checkbox based on the current payment method
         cboReceipt.setChecked(receipt.getPaymentMethod() == 1);
 
-
         view.findViewById(R.id.btnSaveReceipt).setOnClickListener(v -> {
-            // Update the payment method based on checkbox state
 
             boolean isPayment = cboReceipt.isChecked();
 
             if (receiptDAO.updatePaymentMethod(receipt, isPayment)) {
                 Toast.makeText(context, "Payment method updated successfully", Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged(); // Notify the adapter that the dataset has changed
+                notifyDataSetChanged();
             } else {
                 Toast.makeText(context, "Failed to update payment method", Toast.LENGTH_SHORT).show();
             }
@@ -128,6 +124,5 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             tvPayment = itemView.findViewById(R.id.tvPaymentMethodAdmin);
             tvPrice = itemView.findViewById(R.id.tvPriceReceiptAdmin);
         }
-
     }
 }

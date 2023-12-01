@@ -1,15 +1,13 @@
 package fpoly.vunvph33438.vehiclevista.Model;
 
-import java.util.Date;
-
 public class Receipt {
-        private int id_Receipt;
-        private int id_Car;
-        private int id_User;
-        private String rentalStartDate;
-        private String rentalEndDate;
-        private int price;
-        private int paymentMethod;
+    private int id_Receipt;
+    private int id_Car;
+    private int id_User;
+    private String rentalStartDate;
+    private String rentalEndDate;
+    private int price;
+    private int paymentMethod;
 
     public Receipt() {
     }
@@ -79,6 +77,4 @@ public class Receipt {
     public void setPaymentMethod(int paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-
-
 }

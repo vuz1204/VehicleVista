@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +20,10 @@ import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class ViewCar extends AppCompatActivity {
+
     ImageView imgViewCar;
-    TextView tvNameViewCar, tvPriceViewCar, tvDescriptionViewCar;
+    TextView tvNameViewCar, tvPriceViewCar, tvDescriptionViewCar, tvAvailableViewCar;
     Button btnRentalViewCar;
-    ArrayList<Car> list;
     CarDAO carDAO;
 
     @Override
@@ -33,6 +34,7 @@ public class ViewCar extends AppCompatActivity {
         tvNameViewCar = findViewById(R.id.tvNameViewCar);
         tvPriceViewCar = findViewById(R.id.tvPriceViewCar);
         tvDescriptionViewCar = findViewById(R.id.tvDescriptionViewCar);
+        tvAvailableViewCar = findViewById(R.id.tvAvailableViewCar);
         btnRentalViewCar = findViewById(R.id.btnRentalViewCar);
 
         int carId = getIntent().getIntExtra("carId", -1);
@@ -42,6 +44,13 @@ public class ViewCar extends AppCompatActivity {
             tvNameViewCar.setText("Name: " + car.getModel());
             tvPriceViewCar.setText("Price: " + car.getPrice());
             tvDescriptionViewCar.setText("Description: " + car.getDescription());
+            if (car.isAvailable() == 0) {
+                tvAvailableViewCar.setTextColor(Color.BLUE);
+                tvAvailableViewCar.setText("Available");
+            } else {
+                tvAvailableViewCar.setTextColor(Color.RED);
+                tvAvailableViewCar.setText("UnAvailable");
+            }
 
             if (car.getImage() != null && car.getImage().length > 0) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(car.getImage(), 0, car.getImage().length);

@@ -33,6 +33,7 @@ import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
     EditText edIdReceipt, edIdCar, edIdUser, edStartDate, edEndDate, edPrice;
     private EditText selectedEditText;
     RadioGroup rdoGroup;
@@ -40,12 +41,12 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
     Button btnRentalCar;
     private int carPrice;
     private ArrayList<Receipt> list = new ArrayList<>();
-    ReceiptAdapter receiptAdapter;
-    ReceiptUserAdapter receiptUserAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rental_car);
+
         edIdReceipt = findViewById(R.id.edIdReceipt);
         edIdCar = findViewById(R.id.edIdCarRental);
         edIdUser = findViewById(R.id.edIdUserRentalCar);
@@ -56,18 +57,26 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         rdoDirectPayment = findViewById(R.id.rdoDirectPayment);
         rdoCreditCard = findViewById(R.id.rdoCreditCardPayment);
         btnRentalCar = findViewById(R.id.btnRentalCar);
+
         int carId = getIntent().getIntExtra("carId", -1);
         int userId = getUserIdFromSharedPreferences();
+
         carPrice = getIntent().getIntExtra("carPrice", 0);
+
         edIdCar.setText(String.valueOf(carId));
         edIdUser.setText(String.valueOf(userId));
+
         edStartDate.setOnClickListener(v -> showDatePickerDialog(edStartDate));
+
         edEndDate.setOnClickListener(v -> showDatePickerDialog(edEndDate));
+
         btnRentalCar.setOnClickListener(v -> rentCar());
+
         edIdReceipt.setEnabled(false);
     }
     private void rentCar() {
         int selectedPaymentMethod;
+
         if (rdoDirectPayment.isChecked()) {
             selectedPaymentMethod = 0;
         } else if (rdoCreditCard.isChecked()) {
@@ -76,6 +85,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
             Toast.makeText(RentalCar.this, "Please select payment method", Toast.LENGTH_SHORT).show();
             return;
         }
+
         Receipt receipt = new Receipt();
         receipt.setPaymentMethod(selectedPaymentMethod);
         receipt.setId_Car(Integer.parseInt(edIdCar.getText().toString()));
@@ -83,7 +93,9 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         receipt.setRentalStartDate(edStartDate.getText().toString());
         receipt.setRentalEndDate(edEndDate.getText().toString());
         receipt.setPrice(Integer.parseInt(edPrice.getText().toString()));
+
         ReceiptDAO receiptDAO = new ReceiptDAO(this);
+
         if (receiptDAO.insert(receipt)) {
             Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
             list.add(receipt);
@@ -119,7 +131,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         String startDateStr = edStartDate.getText().toString();
         String endDateStr = edEndDate.getText().toString();
         if (!startDateStr.isEmpty() && !endDateStr.isEmpty()) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             try {
                 Date startDate = dateFormat.parse(startDateStr);
                 Date endDate = dateFormat.parse(endDateStr);

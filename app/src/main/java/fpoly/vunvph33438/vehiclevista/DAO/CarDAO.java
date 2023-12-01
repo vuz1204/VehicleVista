@@ -118,13 +118,11 @@ public class CarDAO {
         ContentValues values = new ContentValues();
         values.put(COLUMN_IMAGE, image);
 
-        // Update the record with the given carId
         int rowsAffected = db.update(TABLE_NAME, values, COLUMN_ID_CAR + " = ?",
                 new String[]{String.valueOf(carId)});
 
         db.close();
 
-        // Return true if the update was successful
         return rowsAffected > 0;
     }
     public Car getCarById(int carId) {

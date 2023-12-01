@@ -116,10 +116,8 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
 
     }
     private void startViewCarActivity(Car car) {
-        // You need to pass necessary data to the ViewCar activity, such as car ID or other relevant information
-        // For example, you can use Intent to pass data
         Intent intent = new Intent(context, ViewCar.class);
-        intent.putExtra("carId", car.getIdCar()); // Assuming car has an ID field
+        intent.putExtra("carId", car.getIdCar());
         context.startActivity(intent);
     }
 }

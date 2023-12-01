@@ -48,17 +48,17 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
         Receipt receipt = list.get(position);
         if (receipt != null) {
             if (receipt.getId_User() == loggedInUserId) {
-                holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-                holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
-                holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
-                holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
+                holder.tvIdReceipt.setText("ID Receipt: " + receipt.getId_Receipt());
+                holder.tvIdCar.setText("ID Car: " + receipt.getId_Car());
+                holder.tvStartDate.setText("Start Date: " + receipt.getRentalStartDate());
+                holder.tvEndDate.setText("End Date: "  + receipt.getRentalEndDate());
 
                 if (receipt.getPaymentMethod() == 0) {
                     holder.tvPayment.setTextColor(Color.RED);
-                    holder.tvPayment.setText("UnPayment");
+                    holder.tvPayment.setText("Unpaid");
                 } else {
                     holder.tvPayment.setTextColor(Color.BLUE);
-                    holder.tvPayment.setText("Payment");
+                    holder.tvPayment.setText("Paid");
                 }
                 holder.tvPrice.setText(String.valueOf(receipt.getPrice()));
             } else {
