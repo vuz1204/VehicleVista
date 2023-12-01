@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
-import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
@@ -25,7 +23,6 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     ArrayList<Receipt> list;
     private ItemClickListener itemClickListener;
     ReceiptDAO receiptDAO;
-    CarDAO carDAO;
     private int loggedInUserId;
 
     private static final String TAG = "ReceiptAdminAdapter";
@@ -38,7 +35,6 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
         this.list = list;
         this.loggedInUserId = loggedInUserId;
         receiptDAO = new ReceiptDAO(context);
-        carDAO = new CarDAO(context);
     }
     @NonNull
     @Override
@@ -50,14 +46,10 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     @Override
     public void onBindViewHolder(@NonNull ReceiptUserAdapter.ReceiptViewHolder holder, int position) {
         Receipt receipt = list.get(position);
-
         if (receipt != null) {
             if (receipt.getId_User() == loggedInUserId) {
-
-                int carId = receipt.getId_Car();
-                String carName = carDAO.getCarNameById(carId);
                 holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-                holder.tvIdCar.setText("Model :" + carName);
+                holder.tvIdCar.setText("ID Car :" + receipt.getId_Car());
                 holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
                 holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
 

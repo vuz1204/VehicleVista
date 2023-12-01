@@ -75,14 +75,6 @@ public class ManageFragment extends Fragment {
             }
         });
 
-        tvSalesReport = view.findViewById(R.id.tvSalesReport);
-        tvSalesReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         tvChangePassword = view.findViewById(R.id.tvChangePassword);
         tvChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override

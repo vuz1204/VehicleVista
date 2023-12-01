@@ -22,7 +22,9 @@ import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandAdapter;
 import fpoly.vunvph33438.vehiclevista.DAO.BrandDAO;
+import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
+import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class BrandFragment extends Fragment {
@@ -50,8 +52,17 @@ public class BrandFragment extends Fragment {
         brandAdapter = new BrandAdapter(getContext(),list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(brandAdapter);
+
         view.findViewById(R.id.fabBrand).setOnClickListener(v -> {
             showAddOrEditDialog_Brand(getContext(), 0, null);
+        });
+
+        brandAdapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void UpdateItem(int position) {
+                Brand brand = list.get(position);
+                showAddOrEditDialog_Brand(getContext(), 1, brand);
+            }
         });
         return view;
     }
@@ -108,6 +119,11 @@ public class BrandFragment extends Fragment {
                 }
             }
         });
+
+        mView.findViewById(R.id.btnCancleBrand).setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
     }

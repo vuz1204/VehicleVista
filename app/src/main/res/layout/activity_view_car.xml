@@ -35,8 +35,6 @@
                 android:textSize="30dp"
                 android:textStyle="bold"/>
 
-            <!-- Add more content here -->
-
             <TextView
                 android:id="@+id/tvPriceViewCar"
                 android:layout_width="match_parent"
@@ -53,7 +51,13 @@
                 android:text="Description: "
                 android:textSize="30dp" />
 
-            <!-- Add more content here -->
+            <TextView
+                android:id="@+id/tvAvailableViewCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Available"
+                android:textSize="30dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

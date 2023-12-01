@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandSpinner;
+import fpoly.vunvph33438.vehiclevista.Adapter.BrandSpinnerUser;
 import fpoly.vunvph33438.vehiclevista.Adapter.CarHomeAdapter;
 import fpoly.vunvph33438.vehiclevista.DAO.BrandDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
@@ -105,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
         Spinner spinnerBrand = view.findViewById(R.id.spinnerBrand);
         BrandDAO brandDAO = new BrandDAO(this);
         ArrayList<Brand> brandList = brandDAO.selectAll();
-        BrandSpinner brandAdapter = new BrandSpinner(this, brandList);
+        BrandSpinnerUser brandAdapter = new BrandSpinnerUser(this, brandList);
         spinnerBrand.setAdapter(brandAdapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -119,11 +120,16 @@ public class SearchActivity extends AppCompatActivity {
                         if (selectedBrand != null) {
                             int selectedBrandId = selectedBrand.getIdBrand();
 
-                            ArrayList<Car> filteredCars = filterCarsByBrand(selectedBrandId);
-                            filteredCars = filterCarsByPrice(filteredCars, view);
+                            if (selectedBrandId != 0) {
+                                ArrayList<Car> filteredCars = filterCarsByBrand(selectedBrandId);
+                                filteredCars = filterCarsByPrice(filteredCars, view);
 
-                            carHomeAdapter.setCarList(filteredCars);
-                            carHomeAdapter.notifyDataSetChanged();
+                                carHomeAdapter.setCarList(filteredCars);
+                                carHomeAdapter.notifyDataSetChanged();
+                            } else {
+                                carHomeAdapter.setCarList(listCar);
+                                carHomeAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
                 })

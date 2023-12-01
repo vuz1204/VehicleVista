@@ -2,7 +2,6 @@ package fpoly.vunvph33438.vehiclevista.ActivityAddReceipt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -34,22 +33,22 @@ import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    EditText edNameCar, edIdCar, edStartDate, edEndDate, edPrice;
+    EditText edIdReceipt, edIdCar, edIdUser, edStartDate, edEndDate, edPrice;
     private EditText selectedEditText;
     RadioGroup rdoGroup;
     RadioButton rdoDirectPayment, rdoCreditCard;
     Button btnRentalCar;
     private int carPrice;
     private ArrayList<Receipt> list = new ArrayList<>();
-    CarDAO carDAO;
-    @SuppressLint("MissingInflatedId")
+    ReceiptAdapter receiptAdapter;
+    ReceiptUserAdapter receiptUserAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rental_car);
-        carDAO = new CarDAO(RentalCar.this);
+        edIdReceipt = findViewById(R.id.edIdReceipt);
         edIdCar = findViewById(R.id.edIdCarRental);
-        edNameCar = findViewById(R.id.edNameCarRental);
+        edIdUser = findViewById(R.id.edIdUserRentalCar);
         edStartDate = findViewById(R.id.edStartDate);
         edEndDate = findViewById(R.id.edEndDate);
         edPrice = findViewById(R.id.edPriceRenTalCar);
@@ -57,14 +56,15 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         rdoDirectPayment = findViewById(R.id.rdoDirectPayment);
         rdoCreditCard = findViewById(R.id.rdoCreditCardPayment);
         btnRentalCar = findViewById(R.id.btnRentalCar);
-        int idCar = getIntent().getIntExtra("carId", -1);
+        int carId = getIntent().getIntExtra("carId", -1);
+        int userId = getUserIdFromSharedPreferences();
         carPrice = getIntent().getIntExtra("carPrice", 0);
-        String nameCar = carDAO.getCarNameById(idCar);
-        edIdCar.setText(String.valueOf(idCar));
-        edNameCar.setText(nameCar);
+        edIdCar.setText(String.valueOf(carId));
+        edIdUser.setText(String.valueOf(userId));
         edStartDate.setOnClickListener(v -> showDatePickerDialog(edStartDate));
         edEndDate.setOnClickListener(v -> showDatePickerDialog(edEndDate));
         btnRentalCar.setOnClickListener(v -> rentCar());
+        edIdReceipt.setEnabled(false);
     }
     private void rentCar() {
         int selectedPaymentMethod;
@@ -79,6 +79,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         Receipt receipt = new Receipt();
         receipt.setPaymentMethod(selectedPaymentMethod);
         receipt.setId_Car(Integer.parseInt(edIdCar.getText().toString()));
+        receipt.setId_User(Integer.parseInt(edIdUser.getText().toString()));
         receipt.setRentalStartDate(edStartDate.getText().toString());
         receipt.setRentalEndDate(edEndDate.getText().toString());
         receipt.setPrice(Integer.parseInt(edPrice.getText().toString()));
@@ -86,7 +87,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         if (receiptDAO.insert(receipt)) {
             Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
             list.add(receipt);
-            updateCarAvailability(Integer.parseInt(edNameCar.getText().toString()));
+            updateCarAvailability(Integer.parseInt(edIdCar.getText().toString()));
             Intent intent = new Intent(RentalCar.this, CarBookingHistoryFragment.class);
             startActivity(intent);
         } else {

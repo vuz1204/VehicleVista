@@ -54,8 +54,8 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
             }
             return false;
         });
-        holder.tvIdBrand.setText("ID Brand :" + list.get(position).getIdBrand());
-        holder.tvBrand.setText("Brand :" + list.get(position).getBrand());
+        holder.tvIdBrand.setText("ID Brand: " + list.get(position).getIdBrand());
+        holder.tvBrand.setText("Brand: " + list.get(position).getBrand());
         holder.imgDelete.setOnClickListener(v -> {
             showDeleteDialog(position);
         });
@@ -68,7 +68,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setIcon(R.drawable.ic_warning);
             builder.setTitle("Notification");
-            builder.setMessage("Are you sure you want to delete " + brand.getIdBrand() + " ?");
+            builder.setMessage("Are you sure you want to delete " + brand.getBrand() + "?");
             builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

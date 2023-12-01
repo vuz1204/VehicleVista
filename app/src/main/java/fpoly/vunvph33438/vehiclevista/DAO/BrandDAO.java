@@ -24,7 +24,7 @@ public class BrandDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_BRAND, obj.getBrand());
         long id = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-        obj.setIdBrand((int) id); // Assuming idBrand is an int
+        obj.setIdBrand((int) id);
         return id != -1;
     }
 

@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:drawableEnd="@drawable/ic_search"
-        android:padding="10dp"
-        android:hint="Search" />
+        android:hint="Search"
+        android:padding="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvCar"

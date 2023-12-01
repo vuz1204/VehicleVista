@@ -1,6 +1,5 @@
 package fpoly.vunvph33438.vehiclevista.Fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +7,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -15,19 +27,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,11 +42,15 @@ import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
+
 public class CarFragment extends Fragment {
+
+    private static final String TAG = "CarFragment";
     RecyclerView recyclerView;
     CarDAO carDAO;
     ArrayList<Car> list = new ArrayList<>();
-    EditText edIdCar,edModel,edPrice,edDescription;
+    ArrayList<Car> tempListCar = new ArrayList<>();
+    EditText edIdCar, edModel, edPrice, edDescription, edSearchCar;
     Spinner spinnerBrand;
     CheckBox chkAvailable;
     ImageView imgImport;
@@ -58,32 +61,61 @@ public class CarFragment extends Fragment {
     int idBrand;
     CarAdapter carAdapter;
     private Uri selectedImageUri;
-    private static final int REQUEST_IMAGE_PICKER = 1;
+    private final ActivityResultLauncher<String> importImageLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), this::onImagePicked);
 
+    public CarFragment() {
+        // Required empty public constructor
+    }
 
     private boolean isArray(String str) {
         return str.matches("[a-zA-Z0-9]+");
     }
 
-    private static final String TAG = "CarFragment";
-
-    public CarFragment() {
-        // Required empty public constructor
-    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_car, container, false);
+
         recyclerView = view.findViewById(R.id.rcvCar);
         carDAO = new CarDAO(getContext());
         list = carDAO.getAllCars();
-        carAdapter = new CarAdapter(getContext(),list);
+        tempListCar = carDAO.getAllCars();
+        carAdapter = new CarAdapter(getContext(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(carAdapter);
+
+        edSearchCar = view.findViewById(R.id.edSearchCar);
+        edSearchCar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().toLowerCase();
+
+                list.clear();
+
+                for (Car car : tempListCar) {
+                    if (car.getModel().toLowerCase().contains(searchText)) {
+                        list.add(car);
+                    }
+                }
+                carAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
         view.findViewById(R.id.fabCar).setOnClickListener(v -> {
             showAddOrUpdateDialog(getContext(), 0, null);
         });
+
         carAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void UpdateItem(int position) {
@@ -94,6 +126,7 @@ public class CarFragment extends Fragment {
 
         return view;
     }
+
     private void showAddOrUpdateDialog(Context context, int type, Car car) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_car, null);
@@ -106,11 +139,14 @@ public class CarFragment extends Fragment {
         spinnerBrand = view1.findViewById(R.id.spinnerIdBrand);
         imgImport = view1.findViewById(R.id.imgImportCar);
         chkAvailable = view1.findViewById(R.id.chkStatusCar);
+
         imgImport.setOnClickListener(v -> {
-            // Request permission and launch image picker
             importImageLauncher.launch("image/*");
         });
+
         edIdCar.setEnabled(false);
+        chkAvailable.setChecked(true);
+
         brandDAO = new BrandDAO(context);
         listBrand = brandDAO.selectAll();
         brandSpinner = new BrandSpinner(context, listBrand);
@@ -224,9 +260,9 @@ public class CarFragment extends Fragment {
         alertDialog.show();
     }
 
-    private boolean validate(String model, String price,String description) {
+    private boolean validate(String model, String price, String description) {
         try {
-            if (model.isEmpty() || price.isEmpty()|| description.isEmpty()) {
+            if (model.isEmpty() || price.isEmpty() || description.isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng cung cấp đủ thông tin", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -242,11 +278,6 @@ public class CarFragment extends Fragment {
         list.addAll(carDAO.getAllCars());
         carAdapter.notifyDataSetChanged();
     }
-
-    private final ActivityResultLauncher<String> importImageLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            this::onImagePicked
-    );
 
     private void onImagePicked(Uri imageUri) {
         if (imageUri != null) {
@@ -294,6 +325,7 @@ public class CarFragment extends Fragment {
         edPrice.setText("");
         edDescription.setText("");
     }
+
     private boolean isInteger(String str) {
         try {
             Integer.parseInt(str);
@@ -302,5 +334,4 @@ public class CarFragment extends Fragment {
             return false;
         }
     }
-
 }
