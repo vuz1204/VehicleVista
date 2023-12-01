@@ -8,11 +8,12 @@ public class Receipt {
     private String rentalEndDate;
     private int price;
     private int paymentMethod;
+    private String date;
 
     public Receipt() {
     }
 
-    public Receipt(int id_Receipt, int id_Car, int id_User, String rentalStartDate, String rentalEndDate, int paymentMethod, int price) {
+    public Receipt(int id_Receipt, int id_Car, int id_User, String rentalStartDate, String rentalEndDate, int paymentMethod, int price,String date) {
         this.id_Receipt = id_Receipt;
         this.id_Car = id_Car;
         this.id_User = id_User;
@@ -20,6 +21,7 @@ public class Receipt {
         this.rentalEndDate = rentalEndDate;
         this.paymentMethod = paymentMethod;
         this.price = price;
+        this.date = date;
     }
 
     public int getId_Receipt() {
@@ -76,5 +78,13 @@ public class Receipt {
 
     public void setPaymentMethod(int paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -56,11 +56,10 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
 
                 int carId = receipt.getId_Car();
                 String carName = carDAO.getCarNameById(carId);
-                holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-                holder.tvIdCar.setText("Model :" + carName);
-                holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
-                holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
-
+                holder.tvIdReceipt.setText("ID Receipt: " + receipt.getId_Receipt());
+                holder.tvIdCar.setText("Model: " + carName);
+                holder.tvStartDate.setText("Start Date: " + receipt.getRentalStartDate());
+                holder.tvEndDate.setText("End Date: " + receipt.getRentalEndDate());
                 if (receipt.getPaymentMethod() == 0) {
                     holder.tvPayment.setTextColor(Color.RED);
                     holder.tvPayment.setText("UnPayment");
@@ -73,6 +72,7 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
                 holder.itemView.setVisibility(View.GONE);
                 holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }
+            holder.tvDate.setText("Date: "+receipt.getDate());
         }
     }
 
@@ -83,7 +83,7 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     }
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder {
-        TextView tvIdReceipt, tvIdCar, tvStartDate, tvEndDate,tvPayment, tvPrice;
+        TextView tvIdReceipt, tvIdCar, tvStartDate, tvEndDate,tvPayment, tvPrice,tvDate;
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIdReceipt = itemView.findViewById(R.id.tvIdReceiptUser);
@@ -92,6 +92,7 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
             tvEndDate = itemView.findViewById(R.id.tvRentalEndDateUser);
             tvPayment = itemView.findViewById(R.id.tvPaymentMethodUser);
             tvPrice = itemView.findViewById(R.id.tvPriceReceiptUser);
+            tvDate = itemView.findViewById(R.id.tvDateReceiptUser);
         }
     }
 }

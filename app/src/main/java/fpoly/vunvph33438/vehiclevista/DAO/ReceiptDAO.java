@@ -23,6 +23,7 @@ public class ReceiptDAO {
     private static final String COLUMN_RENTAL_END_DATE = "rentalEndDate";
     private static final String COLUMN_PRICE = "price";
     private static final String COLUMN_PAYMENT_METHOD = "paymentMethod";
+    private static final String COLUMN_DATE = "date";
     private Context context;
     private UserDAO userDAO;
 
@@ -41,6 +42,7 @@ public class ReceiptDAO {
         contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
         contentValues.put(COLUMN_PRICE, receipt.getPrice());
         contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
+        contentValues.put(COLUMN_DATE, receipt.getDate());
         try {
             long insertedId = sqLiteDatabase.insertOrThrow(TABLE_NAME, null, contentValues);
             receipt.setId_Receipt((int) insertedId);
@@ -72,6 +74,7 @@ public class ReceiptDAO {
         contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
         contentValues.put(COLUMN_PRICE, receipt.getPrice());
         contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
+        contentValues.put(COLUMN_DATE, receipt.getDate());
         // Update paymentMethod based on the boolean value
         int paymentMethodValue = isPayment ? 1 : 0;
         contentValues.put(COLUMN_PAYMENT_METHOD, paymentMethodValue);
@@ -100,11 +103,28 @@ public class ReceiptDAO {
                 String rentalEndDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RENTAL_END_DATE));
                 int paymentMethod = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_METHOD));
                 int price = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PRICE));
-                list.add(new Receipt(id_Receipt, id_Car, id_User, rentalStartDate, rentalEndDate, paymentMethod, price));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
+                list.add(new Receipt(id_Receipt, id_Car, id_User, rentalStartDate, rentalEndDate, paymentMethod, price,date));
             }
         }
         cursor.close();
         return list;
+    }
+    public int Revenue(String tuNgay, String denNgay) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        String sql = "SELECT SUM(price) as revenue FROM Receipt WHERE date BETWEEN ? AND ?";
+        String dk[] = {tuNgay, denNgay};
+        int revenue = 0;
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, dk);
+        if (cursor.moveToFirst()) {
+            try {
+                revenue = cursor.getInt(cursor.getColumnIndexOrThrow("revenue"));
+            } catch (Exception e) {
+                revenue = 0;
+            }
+        }
+        cursor.close();
+        return revenue;
     }
     private boolean isIdReceiptExists(int idReceipt) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

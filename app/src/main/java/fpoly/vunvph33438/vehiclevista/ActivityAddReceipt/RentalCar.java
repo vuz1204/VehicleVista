@@ -41,6 +41,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
     Button btnRentalCar;
     private int carPrice;
     private ArrayList<Receipt> list = new ArrayList<>();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     CarDAO carDAO;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -68,6 +69,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
     }
     private void rentCar() {
         int selectedPaymentMethod;
+
         if (rdoDirectPayment.isChecked()) {
             selectedPaymentMethod = 0;
         } else if (rdoCreditCard.isChecked()) {
@@ -79,14 +81,18 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         Receipt receipt = new Receipt();
         receipt.setPaymentMethod(selectedPaymentMethod);
         receipt.setId_Car(Integer.parseInt(edIdCar.getText().toString()));
+        receipt.setId_User(getUserIdFromSharedPreferences());
         receipt.setRentalStartDate(edStartDate.getText().toString());
         receipt.setRentalEndDate(edEndDate.getText().toString());
         receipt.setPrice(Integer.parseInt(edPrice.getText().toString()));
+        Date date = new Date();
+        String ngay = dateFormat.format(date);
+        receipt.setDate(ngay);
         ReceiptDAO receiptDAO = new ReceiptDAO(this);
         if (receiptDAO.insert(receipt)) {
             Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
             list.add(receipt);
-            updateCarAvailability(Integer.parseInt(edNameCar.getText().toString()));
+            updateCarAvailability(Integer.parseInt(edIdCar.getText().toString())); // Corrected: use edIdCar instead of edNameCar
             Intent intent = new Intent(RentalCar.this, CarBookingHistoryFragment.class);
             startActivity(intent);
         } else {
@@ -94,22 +100,38 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         }
     }
 
+
     private void showDatePickerDialog(EditText editText) {
+        final Calendar calendar = Calendar.getInstance();
+
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateEditTextWithDate(editText, calendar);
+            updatePrice();
+        };
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
-                this,
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+                dateSetListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
         selectedEditText = editText;
     }
 
+    private void updateEditTextWithDate(EditText editText, Calendar calendar) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        editText.setText(dateFormat.format(calendar.getTime()));
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         if (selectedEditText != null) {
-            selectedEditText.setText(String.format(Locale.getDefault(), "%d-%02d-%02d", year, month + 1, dayOfMonth));
+            selectedEditText.setText(String.format(Locale.getDefault(), "%02d/%02d/%d", dayOfMonth, month + 1, year));
             updatePrice();
         }
     }
@@ -118,7 +140,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         String startDateStr = edStartDate.getText().toString();
         String endDateStr = edEndDate.getText().toString();
         if (!startDateStr.isEmpty() && !endDateStr.isEmpty()) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             try {
                 Date startDate = dateFormat.parse(startDateStr);
                 Date endDate = dateFormat.parse(endDateStr);
