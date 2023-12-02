@@ -16,7 +16,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
     UserDAO userDAO;
     EditText edFullnameUD, edEmailUD, edPhoneNumberUD;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +25,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         edEmailUD = findViewById(R.id.edEmailUD);
         edPhoneNumberUD = findViewById(R.id.edPhoneNumberUD);
 
-        userDAO =  new UserDAO(this);
+        userDAO = new UserDAO(this);
 
         findViewById(R.id.btnSaveUD).setOnClickListener(v -> {
             String fullname = edFullnameUD.getText().toString().trim();

@@ -20,12 +20,11 @@ import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class CarBookingHistoryFragment extends Fragment {
+
     RecyclerView rcvReceipt;
     ReceiptDAO receiptDAO;
     ArrayList<Receipt> list = new ArrayList<>();
-
     ReceiptUserAdapter receiptUserAdapter;
-
 
     public CarBookingHistoryFragment() {
         // Required empty public constructor

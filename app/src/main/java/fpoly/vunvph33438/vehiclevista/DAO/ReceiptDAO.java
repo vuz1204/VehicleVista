@@ -10,11 +10,11 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.Database.DbHelper;
-import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
+import fpoly.vunvph33438.vehiclevista.Model.User;
 
 public class ReceiptDAO {
-    DbHelper dbHelper;
+
     private static final String TABLE_NAME = "Receipt";
     private static final String COLUMN_ID_RECEIPT = "id_receipt";
     private static final String COLUMN_ID_CAR = "id_car";
@@ -24,6 +24,7 @@ public class ReceiptDAO {
     private static final String COLUMN_PRICE = "price";
     private static final String COLUMN_PAYMENT_METHOD = "paymentMethod";
     private static final String COLUMN_DATE = "date";
+    DbHelper dbHelper;
     private Context context;
     private UserDAO userDAO;
 
@@ -89,6 +90,16 @@ public class ReceiptDAO {
         return getAll(sql);
     }
 
+    public Receipt selectIdByCar(String id) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_CAR + "=?";
+        ArrayList<Receipt> list = getAll(sql, id);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
 
     private ArrayList<Receipt> getAll(String sql, String... selectionArgs) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -104,12 +115,13 @@ public class ReceiptDAO {
                 int paymentMethod = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_METHOD));
                 int price = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PRICE));
                 String date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
-                list.add(new Receipt(id_Receipt, id_Car, id_User, rentalStartDate, rentalEndDate, paymentMethod, price,date));
+                list.add(new Receipt(id_Receipt, id_Car, id_User, rentalStartDate, rentalEndDate, paymentMethod, price, date));
             }
         }
         cursor.close();
         return list;
     }
+
     public int Revenue(String tuNgay, String denNgay) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String sql = "SELECT SUM(price) as revenue FROM Receipt WHERE date BETWEEN ? AND ?";
@@ -125,13 +137,5 @@ public class ReceiptDAO {
         }
         cursor.close();
         return revenue;
-    }
-    private boolean isIdReceiptExists(int idReceipt) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "SELECT " + COLUMN_ID_RECEIPT + " FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_RECEIPT + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idReceipt)});
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
-        return exists;
     }
 }

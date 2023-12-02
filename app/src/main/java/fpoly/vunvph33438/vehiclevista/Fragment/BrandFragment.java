@@ -5,12 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,38 +12,45 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandAdapter;
 import fpoly.vunvph33438.vehiclevista.DAO.BrandDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
-import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class BrandFragment extends Fragment {
+
+    public static final String TAG = "BrandFragment";
     RecyclerView recyclerView;
     BrandDAO brandDAO;
     EditText edIdBrand, edBrand;
     ArrayList<Brand> list = new ArrayList<>();
-    public static final String TAG = "BrandFragment";
     BrandAdapter brandAdapter;
-    public boolean isArray(String str) {
-        return str.matches("[a-zA-Z0-9]+");
-    }
 
     public BrandFragment() {
         // Required empty public constructor
     }
+
+    public boolean isArray(String str) {
+        return str.matches("[a-zA-Z0-9]+");
+    }
+
     @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand, container, false);
+
         recyclerView = view.findViewById(R.id.rcvBrand);
         brandDAO = new BrandDAO(getContext());
         list = brandDAO.selectAll();
-        brandAdapter = new BrandAdapter(getContext(),list);
+        brandAdapter = new BrandAdapter(getContext(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(brandAdapter);
 
@@ -66,6 +67,7 @@ public class BrandFragment extends Fragment {
         });
         return view;
     }
+
     protected void showAddOrEditDialog_Brand(Context context, int type, Brand brand) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View mView = LayoutInflater.from(context).inflate(R.layout.dialog_brand, null);
@@ -100,13 +102,13 @@ public class BrandFragment extends Fragment {
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "Error while manipulating database", e);
-                        Toast.makeText(context,"Add failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Add failed", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     brand.setBrand(brandName);
                     try {
                         if (brandDAO.update(brand)) {
-                            Toast.makeText(context,"Edited successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Edited successfully", Toast.LENGTH_SHORT).show();
                             alertDialog.dismiss();
                             update();
                         } else {

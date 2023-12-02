@@ -16,15 +16,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
+import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
+import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class ViewCar extends AppCompatActivity {
 
     ImageView imgViewCar;
-    TextView tvNameViewCar, tvPriceViewCar, tvDescriptionViewCar, tvAvailableViewCar;
+    TextView tvNameViewCar, tvPriceViewCar, tvDescriptionViewCar, tvAvailableViewCar, tvStartDateViewCar, tvEndDateViewCar;
     Button btnRentalViewCar;
     CarDAO carDAO;
+    ReceiptDAO receiptDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +38,33 @@ public class ViewCar extends AppCompatActivity {
         tvPriceViewCar = findViewById(R.id.tvPriceViewCar);
         tvDescriptionViewCar = findViewById(R.id.tvDescriptionViewCar);
         tvAvailableViewCar = findViewById(R.id.tvAvailableViewCar);
+        tvStartDateViewCar = findViewById(R.id.tvStartDateViewCar);
+        tvEndDateViewCar = findViewById(R.id.tvEndDateViewCar);
         btnRentalViewCar = findViewById(R.id.btnRentalViewCar);
 
         int carId = getIntent().getIntExtra("carId", -1);
         if (carId != -1) {
             carDAO = new CarDAO(this);
             Car car = carDAO.getCarById(carId);
+
+            receiptDAO = new ReceiptDAO(this);
+            Receipt receipt = receiptDAO.selectIdByCar(String.valueOf(carId));
+
             tvNameViewCar.setText("Name: " + car.getModel());
             tvPriceViewCar.setText("Price: " + car.getPrice());
             tvDescriptionViewCar.setText("Description: " + car.getDescription());
             if (car.isAvailable() == 0) {
                 tvAvailableViewCar.setTextColor(Color.BLUE);
                 tvAvailableViewCar.setText("Available");
+                tvStartDateViewCar.setVisibility(View.GONE);
+                tvEndDateViewCar.setVisibility(View.GONE);
             } else {
                 tvAvailableViewCar.setTextColor(Color.RED);
                 tvAvailableViewCar.setText("UnAvailable");
+                tvStartDateViewCar.setVisibility(View.VISIBLE);
+                tvEndDateViewCar.setVisibility(View.VISIBLE);
+                tvStartDateViewCar.setText(receipt.getRentalStartDate());
+                tvEndDateViewCar.setText(receipt.getRentalEndDate());
             }
 
             if (car.getImage() != null && car.getImage().length > 0) {

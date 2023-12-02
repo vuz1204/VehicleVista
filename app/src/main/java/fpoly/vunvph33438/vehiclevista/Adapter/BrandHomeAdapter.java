@@ -16,15 +16,18 @@ import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class BrandHomeAdapter extends RecyclerView.Adapter<BrandHomeAdapter.BrandHomeViewHolder> {
+
+    private static final String TAG = "BrandAdapter";
     Context context;
     ArrayList<Brand> list;
     BrandDAO brandDAO;
-    private static final String TAG = "BrandAdapter";
+
     public BrandHomeAdapter(Context context, ArrayList<Brand> list) {
         this.context = context;
         this.list = list;
         brandDAO = new BrandDAO(context);
     }
+
     @NonNull
     @Override
     public BrandHomeAdapter.BrandHomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

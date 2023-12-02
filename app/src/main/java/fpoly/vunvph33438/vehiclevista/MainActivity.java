@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
 import fpoly.vunvph33438.vehiclevista.Fragment.AccountFragment;
 import fpoly.vunvph33438.vehiclevista.Fragment.BrandFragment;
 import fpoly.vunvph33438.vehiclevista.Fragment.CarBookingHistoryFragment;
@@ -19,7 +18,6 @@ import fpoly.vunvph33438.vehiclevista.Fragment.CarFragment;
 import fpoly.vunvph33438.vehiclevista.Fragment.HistoryFragment;
 import fpoly.vunvph33438.vehiclevista.Fragment.HomeFragment;
 import fpoly.vunvph33438.vehiclevista.Fragment.ManageFragment;
-import fpoly.vunvph33438.vehiclevista.Model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("VehicleVista");
-
 
         bottomNavigationView = findViewById(R.id.nvBottom);
         Intent intent = getIntent();

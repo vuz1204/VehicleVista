@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,11 +63,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         if (car != null) {
             int idBrand = car.getIdBrand();
             String brandName = brandDAO.getBrandNameById(idBrand);
-            holder.tvIdCar.setText("ID Car :" + car.getIdCar());
-            holder.tvIdBrand.setText("ID Brand :" + brandName);
-            holder.tvModel.setText("Model :" + car.getModel());
-            holder.tvPrice.setText("Price :" + car.getPrice());
-            holder.tvDescription.setText("Description :" + car.getDescription());
+            holder.tvIdCar.setText("ID Car: " + car.getIdCar());
+            holder.tvIdBrand.setText("ID Brand: " + brandName);
+            holder.tvModel.setText("Model: " + car.getModel());
+            holder.tvPrice.setText("Price: " + car.getPrice());
+            holder.tvDescription.setText("Description: " + car.getDescription());
             if (car.isAvailable() == 0) {
                 holder.tvAvailable.setTextColor(Color.BLUE);
                 holder.tvAvailable.setText("Available");
@@ -105,7 +103,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setIcon(R.drawable.ic_warning);
             builder.setTitle("Notification");
-            builder.setMessage("Are you sure you want to delete " + car.getIdBrand() + " ?");
+            builder.setMessage("Are you sure you want to delete " + car.getModel() + "?");
             builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

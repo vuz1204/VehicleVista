@@ -23,6 +23,7 @@ import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder> {
+
     private static final String TAG = "ReceiptAdminAdapter";
     Context context;
     ArrayList<Receipt> list;
@@ -54,21 +55,21 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         if (receipt != null) {
             int carId = receipt.getId_Car();
             String carName = carDAO.getCarNameById(carId);
-            holder.tvIdReceipt.setText("ID Receipt :" + receipt.getId_Receipt());
-            holder.tvIdCar.setText("Model :" + carName);
+            holder.tvIdReceipt.setText("ID Receipt: " + receipt.getId_Receipt());
+            holder.tvIdCar.setText("Model: " + carName);
             holder.tvIdUser.setText("ID User: " + receipt.getId_User());
-            holder.tvStartDate.setText("Start Date :" + receipt.getRentalStartDate());
-            holder.tvEndDate.setText("End Date :" + receipt.getRentalEndDate());
+            holder.tvStartDate.setText("Start Date: " + receipt.getRentalStartDate());
+            holder.tvEndDate.setText("End Date: " + receipt.getRentalEndDate());
             if (receipt.getPaymentMethod() == 0) {
                 holder.tvPayment.setTextColor(Color.RED);
-                holder.tvPayment.setText("UnPayment");
+                holder.tvPayment.setText("Unpaid");
             } else {
                 holder.tvPayment.setTextColor(Color.BLUE);
-                holder.tvPayment.setText("Payment");
+                holder.tvPayment.setText("Paid");
             }
             holder.tvPrice.setText("" + receipt.getPrice());
         }
-        holder.tvDate.setText("Date: " +receipt.getDate());
+        holder.tvDate.setText("Date: " + receipt.getDate());
         setupLongClickDialog(holder.itemView, receipt);
     }
 
@@ -86,18 +87,16 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         AlertDialog alertDialog = builder.create();
         CheckBox cboReceipt = view.findViewById(R.id.cboPaymentReceipt);
 
-        // Set the initial state of the checkbox based on the current payment method
         cboReceipt.setChecked(receipt.getPaymentMethod() == 1);
 
 
         view.findViewById(R.id.btnSaveReceipt).setOnClickListener(v -> {
-            // Update the payment method based on checkbox state
 
             boolean isPayment = cboReceipt.isChecked();
 
             if (receiptDAO.updatePaymentMethod(receipt, isPayment)) {
                 Toast.makeText(context, "Payment method updated successfully", Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged(); // Notify the adapter that the dataset has changed
+                notifyDataSetChanged();
             } else {
                 Toast.makeText(context, "Failed to update payment method", Toast.LENGTH_SHORT).show();
             }
@@ -118,7 +117,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     }
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder {
-        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice,tvDate;
+        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice, tvDate;
 
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -12,16 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.Adapter.ReceiptAdapter;
-import fpoly.vunvph33438.vehiclevista.Adapter.ReceiptUserAdapter;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class HistoryFragment extends Fragment {
+
     RecyclerView rcvReceipt;
     ReceiptDAO receiptDAO;
     ArrayList<Receipt> list = new ArrayList<>();
-
     ReceiptAdapter receiptAdapter;
 
     public HistoryFragment() {
@@ -29,14 +28,13 @@ public class HistoryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         rcvReceipt = view.findViewById(R.id.rcvReceipt);
         receiptDAO = new ReceiptDAO(getContext());
         list = receiptDAO.selectID();
-        receiptAdapter = new ReceiptAdapter(getContext(),list);
+        receiptAdapter = new ReceiptAdapter(getContext(), list);
         rcvReceipt.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvReceipt.setAdapter(receiptAdapter);
 

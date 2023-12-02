@@ -17,7 +17,6 @@ import fpoly.vunvph33438.vehiclevista.LoginActivity;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 import fpoly.vunvph33438.vehiclevista.R;
 import fpoly.vunvph33438.vehiclevista.UpdateProfileActivity;
-import fpoly.vunvph33438.vehiclevista.UserManagementActivity;
 
 public class AccountFragment extends Fragment {
 

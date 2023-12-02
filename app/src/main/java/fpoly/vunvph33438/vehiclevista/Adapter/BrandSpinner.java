@@ -13,6 +13,7 @@ import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class BrandSpinner extends BaseAdapter {
+
     Context context;
     ArrayList<Brand> list;
 
@@ -35,10 +36,7 @@ public class BrandSpinner extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
-    private static class BrandViewHolder {
-        TextView tvIdBrand;
-        TextView tvBrand;
-    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         BrandViewHolder viewHolder;
@@ -55,5 +53,10 @@ public class BrandSpinner extends BaseAdapter {
         viewHolder.tvIdBrand.setText(String.valueOf(brand.getIdBrand()));
         viewHolder.tvBrand.setText(brand.getBrand());
         return convertView;
+    }
+
+    private static class BrandViewHolder {
+        TextView tvIdBrand;
+        TextView tvBrand;
     }
 }

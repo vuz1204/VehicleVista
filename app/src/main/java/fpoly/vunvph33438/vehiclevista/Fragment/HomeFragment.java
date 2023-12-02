@@ -2,6 +2,11 @@ package fpoly.vunvph33438.vehiclevista.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -9,16 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import fpoly.vunvph33438.vehiclevista.ActivityAddReceipt.RentalCar;
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandHomeAdapter;
 import fpoly.vunvph33438.vehiclevista.Adapter.CarHomeAdapter;
 import fpoly.vunvph33438.vehiclevista.Adapter.PhotoViewPager2Adapter;
@@ -33,6 +31,7 @@ import fpoly.vunvph33438.vehiclevista.SpacesItemDecoration;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class HomeFragment extends Fragment {
+
     RecyclerView rcvBrandHome, rcvCarHome;
     BrandHomeAdapter brandHomeAdapter;
     CarHomeAdapter carHomeAdapter;
@@ -49,7 +48,7 @@ public class HomeFragment extends Fragment {
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            if(mViewPager2.getCurrentItem() == mListPhotos.size() - 1) {
+            if (mViewPager2.getCurrentItem() == mListPhotos.size() - 1) {
                 mViewPager2.setCurrentItem(0);
             }
             mViewPager2.setCurrentItem(mViewPager2.getCurrentItem() + 1);
@@ -79,7 +78,7 @@ public class HomeFragment extends Fragment {
         brandDAO = new BrandDAO(getContext());
         listBrand = brandDAO.selectAll();
         brandHomeAdapter = new BrandHomeAdapter(getContext(), listBrand);
-        rcvBrandHome.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        rcvBrandHome.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcvBrandHome.setAdapter(brandHomeAdapter);
 
         //Đổ dữ liệu lên Car
@@ -87,7 +86,7 @@ public class HomeFragment extends Fragment {
         listCar = new ArrayList<>();
         carDAO = new CarDAO(getContext());
         listCar = carDAO.getAllCars();
-        carHomeAdapter = new CarHomeAdapter(getContext(),listCar);
+        carHomeAdapter = new CarHomeAdapter(getContext(), listCar);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         rcvCarHome.setLayoutManager(gridLayoutManager);

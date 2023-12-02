@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import fpoly.vunvph33438.vehiclevista.ActivityAddReceipt.RentalCar;
 import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 
@@ -137,15 +136,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         edit.apply();
     }
+
     private void saveUserIdToSharedPreferences(int userId) {
         SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("USER_ID", userId);
         editor.apply();
-    }
-
-    private int retrieveUserIdFromSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        return sharedPreferences.getInt("USER_ID", -1);
     }
 }

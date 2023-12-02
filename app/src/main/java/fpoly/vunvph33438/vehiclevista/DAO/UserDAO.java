@@ -11,6 +11,7 @@ import fpoly.vunvph33438.vehiclevista.Database.DbHelper;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 
 public class UserDAO {
+
     public static final String TABLE_NAME = "User";
     public static final String COLUMN_ID_USER = "id_user";
     public static final String COLUMN_USERNAME = "username";
@@ -99,6 +100,7 @@ public class UserDAO {
 
         return list;
     }
+
     public boolean updatePassForgot(User obj) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String dk[] = {String.valueOf(obj.getId_user())};
@@ -142,6 +144,7 @@ public class UserDAO {
             sqLiteDatabase.close();
         }
     }
+
     public boolean checkInfor(String username, String email) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + "=? AND " + COLUMN_EMAIL + "=?";

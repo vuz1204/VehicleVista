@@ -1,7 +1,6 @@
 package fpoly.vunvph33438.vehiclevista.Adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,30 +15,30 @@ import java.util.ArrayList;
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
-import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.ReceiptViewHolder> {
+
     Context context;
     ArrayList<Receipt> list;
-    private ItemClickListener itemClickListener;
     ReceiptDAO receiptDAO;
     CarDAO carDAO;
+    private ItemClickListener itemClickListener;
     private int loggedInUserId;
 
-    private static final String TAG = "ReceiptAdminAdapter";
-
-    public void setItemClickListener(ItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
-    public ReceiptUserAdapter(Context context, ArrayList<Receipt> list,int loggedInUserId) {
+    public ReceiptUserAdapter(Context context, ArrayList<Receipt> list, int loggedInUserId) {
         this.context = context;
         this.list = list;
         this.loggedInUserId = loggedInUserId;
         receiptDAO = new ReceiptDAO(context);
         carDAO = new CarDAO(context);
     }
+
+    public void setItemClickListener(ItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
     @NonNull
     @Override
     public ReceiptUserAdapter.ReceiptViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,17 +61,17 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
                 holder.tvEndDate.setText("End Date: " + receipt.getRentalEndDate());
                 if (receipt.getPaymentMethod() == 0) {
                     holder.tvPayment.setTextColor(Color.RED);
-                    holder.tvPayment.setText("UnPayment");
+                    holder.tvPayment.setText("Unpaid");
                 } else {
                     holder.tvPayment.setTextColor(Color.BLUE);
-                    holder.tvPayment.setText("Payment");
+                    holder.tvPayment.setText("Paid");
                 }
                 holder.tvPrice.setText(String.valueOf(receipt.getPrice()));
             } else {
                 holder.itemView.setVisibility(View.GONE);
                 holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }
-            holder.tvDate.setText("Date: "+receipt.getDate());
+            holder.tvDate.setText("Date: " + receipt.getDate());
         }
     }
 
@@ -83,7 +82,8 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
     }
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder {
-        TextView tvIdReceipt, tvIdCar, tvStartDate, tvEndDate,tvPayment, tvPrice,tvDate;
+        TextView tvIdReceipt, tvIdCar, tvStartDate, tvEndDate, tvPayment, tvPrice, tvDate;
+
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIdReceipt = itemView.findViewById(R.id.tvIdReceiptUser);

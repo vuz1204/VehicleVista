@@ -15,10 +15,10 @@ import fpoly.vunvph33438.vehiclevista.DAO.UserDAO;
 import fpoly.vunvph33438.vehiclevista.Model.User;
 
 public class ChangePassForgot extends AppCompatActivity {
+
     EditText edNewPass, edCheckPass;
     Button btnSaveChangePass, btnCancelChangePass;
     String username;
-
     UserDAO userDAO;
 
     @Override

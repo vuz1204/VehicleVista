@@ -67,10 +67,6 @@ public class CarFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private boolean isArray(String str) {
-        return str.matches("[a-zA-Z0-9]+");
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -186,7 +182,7 @@ public class CarFragment extends Fragment {
                     Log.e(TAG, "ClickSpinner: " + idBrand);
                 } else {
                     Log.e(TAG, "Invalid position: " + position);
-                    idBrand = 0; // Set a default value or handle accordingly
+                    idBrand = 0;
                 }
             }
 

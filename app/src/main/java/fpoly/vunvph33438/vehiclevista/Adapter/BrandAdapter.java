@@ -21,20 +21,24 @@ import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.R;
 
-public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHolder>{
+public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHolder> {
+
+    private static final String TAG = "BrandAdapter";
     Context context;
     ArrayList<Brand> list;
-    private ItemClickListener itemClickListener;
     BrandDAO brandDAO;
-    private static final String TAG = "BrandAdapter";
-    public void setItemClickListener(ItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
+    private ItemClickListener itemClickListener;
+
     public BrandAdapter(Context context, ArrayList<Brand> list) {
         this.context = context;
         this.list = list;
         brandDAO = new BrandDAO(context);
     }
+
+    public void setItemClickListener(ItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
     @NonNull
     @Override
     public BrandViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -92,6 +96,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
             Log.e(TAG, "Invalid position: " + position);
         }
     }
+
     @Override
     public int getItemCount() {
         return list.size();

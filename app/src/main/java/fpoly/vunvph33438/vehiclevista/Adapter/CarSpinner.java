@@ -13,6 +13,7 @@ import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
 
 public class CarSpinner extends BaseAdapter {
+
     Context context;
     ArrayList<Car> list;
 
@@ -35,10 +36,7 @@ public class CarSpinner extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
-    private static class CarViewHolder {
-        TextView tvIdCar;
-        TextView tvModel;
-    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CarSpinner.CarViewHolder viewHolder;
@@ -55,5 +53,10 @@ public class CarSpinner extends BaseAdapter {
         viewHolder.tvIdCar.setText(String.valueOf(car.getIdCar()));
         viewHolder.tvModel.setText(car.getModel());
         return convertView;
+    }
+
+    private static class CarViewHolder {
+        TextView tvIdCar;
+        TextView tvModel;
     }
 }

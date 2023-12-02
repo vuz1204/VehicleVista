@@ -100,7 +100,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 try {
                     int phoneNumber = Integer.parseInt(phoneNumberStr);
 
-                     if (!isValidEmail(email)) {
+                    if (!isValidEmail(email)) {
                         Toast.makeText(context, "Invalid email address", Toast.LENGTH_SHORT).show();
                         return;
                     } else if (phoneNumber < 1000000 || phoneNumber > 99999999999L) {

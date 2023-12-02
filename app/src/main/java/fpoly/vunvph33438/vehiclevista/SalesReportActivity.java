@@ -1,12 +1,12 @@
 package fpoly.vunvph33438.vehiclevista;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,6 +15,7 @@ import java.util.Locale;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
 
 public class SalesReportActivity extends AppCompatActivity {
+
     EditText edTuNgay, edDenNgay;
     TextView tvRevenue;
     ReceiptDAO receiptDAO;
@@ -51,19 +52,13 @@ public class SalesReportActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                (view, yearSelected, monthOfYear, dayOfMonthSelected) -> {
-                    Calendar selectedDateCalendar = Calendar.getInstance();
-                    selectedDateCalendar.set(yearSelected, monthOfYear, dayOfMonthSelected);
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    String selectedDate = sdf.format(selectedDateCalendar.getTime());
-                    editText.setText(selectedDate);
-                },
-                year,
-                month,
-                dayOfMonth
-        );
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, yearSelected, monthOfYear, dayOfMonthSelected) -> {
+            Calendar selectedDateCalendar = Calendar.getInstance();
+            selectedDateCalendar.set(yearSelected, monthOfYear, dayOfMonthSelected);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String selectedDate = sdf.format(selectedDateCalendar.getTime());
+            editText.setText(selectedDate);
+        }, year, month, dayOfMonth);
         datePickerDialog.show();
     }
 }

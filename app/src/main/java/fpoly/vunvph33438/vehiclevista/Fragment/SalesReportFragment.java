@@ -3,9 +3,6 @@ package fpoly.vunvph33438.vehiclevista.Fragment;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +10,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
-import fpoly.vunvph33438.vehiclevista.Model.Receipt;
 import fpoly.vunvph33438.vehiclevista.R;
 
 
 public class SalesReportFragment extends Fragment {
+
     EditText edTuNgay, edDenNgay;
     TextView tvRevenue;
     ReceiptDAO receiptDAO;
@@ -33,8 +32,7 @@ public class SalesReportFragment extends Fragment {
 
     @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sales_report_activity, container, false);
         edTuNgay = view.findViewById(R.id.edTuNgay);
@@ -67,19 +65,13 @@ public class SalesReportFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getContext(),
-                (view, yearSelected, monthOfYear, dayOfMonthSelected) -> {
-                    Calendar selectedDateCalendar = Calendar.getInstance();
-                    selectedDateCalendar.set(yearSelected, monthOfYear, dayOfMonthSelected);
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    String selectedDate = sdf.format(selectedDateCalendar.getTime());
-                    editText.setText(selectedDate);
-                },
-                year,
-                month,
-                dayOfMonth
-        );
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, yearSelected, monthOfYear, dayOfMonthSelected) -> {
+            Calendar selectedDateCalendar = Calendar.getInstance();
+            selectedDateCalendar.set(yearSelected, monthOfYear, dayOfMonthSelected);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String selectedDate = sdf.format(selectedDateCalendar.getTime());
+            editText.setText(selectedDate);
+        }, year, month, dayOfMonth);
         datePickerDialog.show();
     }
 }

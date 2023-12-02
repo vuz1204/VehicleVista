@@ -29,15 +29,15 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
     ArrayList<Car> listOld;
     CarDAO carDAO;
 
-    public void setCarList(ArrayList<Car> filteredList) {
-        list = filteredList;
-    }
-
     public CarHomeAdapter(Context context, ArrayList<Car> list) {
         this.context = context;
         this.list = list;
         this.listOld = list;
         carDAO = new CarDAO(context);
+    }
+
+    public void setCarList(ArrayList<Car> filteredList) {
+        list = filteredList;
     }
 
     @NonNull
@@ -104,6 +104,12 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
         };
     }
 
+    private void startViewCarActivity(Car car) {
+        Intent intent = new Intent(context, ViewCar.class);
+        intent.putExtra("carId", car.getIdCar());
+        context.startActivity(intent);
+    }
+
     public class CarHomeViewHolder extends RecyclerView.ViewHolder {
         ImageView imgCarHome;
         TextView tvCarHome;
@@ -113,11 +119,5 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
             imgCarHome = itemView.findViewById(R.id.imgCarHome);
             tvCarHome = itemView.findViewById(R.id.tvCarHome);
         }
-
-    }
-    private void startViewCarActivity(Car car) {
-        Intent intent = new Intent(context, ViewCar.class);
-        intent.putExtra("carId", car.getIdCar());
-        context.startActivity(intent);
     }
 }

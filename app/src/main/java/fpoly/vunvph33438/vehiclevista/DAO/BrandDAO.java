@@ -11,14 +11,17 @@ import fpoly.vunvph33438.vehiclevista.Database.DbHelper;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
 
 public class BrandDAO {
-    DbHelper dbHelper;
+
     private static final String TABLE_NAME = "Brand";
     private static final String COLUMN_ID_BRAND = "id_brand";
     private static final String COLUMN_BRAND = "brand";
+    DbHelper dbHelper;
     private Context context;
+
     public BrandDAO(Context context) {
         dbHelper = new DbHelper(context);
     }
+
     public boolean insert(Brand obj) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -34,6 +37,7 @@ public class BrandDAO {
         long check = sqLiteDatabase.delete(TABLE_NAME, COLUMN_ID_BRAND + "=?", dk);
         return check != -1;
     }
+
     public boolean update(Brand obj) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String dk[] = {String.valueOf(obj.getIdBrand())};
@@ -42,7 +46,8 @@ public class BrandDAO {
         long check = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_ID_BRAND + "=?", dk);
         return check != -1;
     }
-    private ArrayList<Brand> getAll(String sql, String... selectionArgs){
+
+    private ArrayList<Brand> getAll(String sql, String... selectionArgs) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ArrayList<Brand> list = new ArrayList<>();
         Cursor cursor = sqLiteDatabase.rawQuery(sql, selectionArgs);
@@ -55,15 +60,18 @@ public class BrandDAO {
         }
         return list;
     }
+
     public ArrayList<Brand> selectAll() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         return getAll(sql);
     }
+
     public Brand selectID(String id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_BRAND + " = ?";
         ArrayList<Brand> list = getAll(sql, id);
         return list.isEmpty() ? null : list.get(0);
     }
+
     public String getBrandNameById(int idBrand) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String[] columns = {COLUMN_BRAND}; // Assuming the name of the car is stored in the 'model' column
