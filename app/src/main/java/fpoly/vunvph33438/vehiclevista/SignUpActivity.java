@@ -50,11 +50,14 @@ public class SignUpActivity extends AppCompatActivity {
                         clearInputFields();
 
                         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        intent.putExtra("NEW_USERNAME", user.getUsername());
+                        intent.putExtra("NEW_PASSWORD", user.getPassword());
                         startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(SignUpActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }
         });

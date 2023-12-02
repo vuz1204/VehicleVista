@@ -53,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         edUsername = findViewById(R.id.edUsername);
         edPassword = findViewById(R.id.edPassword);
         chkRememberPass = findViewById(R.id.chkRememberPass);
+
+
+
         tvForgotPassLogin = findViewById(R.id.tvForgotPassLogin);
         userDAO = new UserDAO(this);
 
@@ -62,7 +65,18 @@ public class LoginActivity extends AppCompatActivity {
         list.add("User");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spinnerRole.setAdapter(adapter);
-        readFile();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey("NEW_USERNAME") && extras.containsKey("NEW_PASSWORD")) {
+            String newUsername = extras.getString("NEW_USERNAME");
+            String newPassword = extras.getString("NEW_PASSWORD");
+
+            edUsername.setText(newUsername);
+            edPassword.setText(newPassword);
+            chkRememberPass.setChecked(false);
+            spinnerRole.setSelection(1);
+        } else {
+            readFile();
+        }
         spinnerRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
