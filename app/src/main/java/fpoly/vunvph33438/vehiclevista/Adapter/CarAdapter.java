@@ -82,7 +82,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                 holder.imgCar.setImageBitmap(bitmap);
             } else {
-                holder.imgCar.setImageResource(R.drawable.logo);
+                holder.imgCar.setImageResource(R.drawable.banner);
             }
         }
 

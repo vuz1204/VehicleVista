@@ -74,7 +74,7 @@
                         android:id="@+id/imgImportCar"
                         android:layout_width="140dp"
                         android:layout_height="140dp"
-                        android:background="@drawable/logo"/>
+                        android:background="@drawable/banner"/>
                 </LinearLayout>
                 <CheckBox
                     android:id="@+id/chkStatusCar"

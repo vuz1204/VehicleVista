@@ -71,7 +71,7 @@ public class ViewCar extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(car.getImage(), 0, car.getImage().length);
                 imgViewCar.setImageBitmap(bitmap);
             } else {
-                imgViewCar.setImageResource(R.drawable.logo);
+                imgViewCar.setImageResource(R.drawable.banner);
             }
 
             btnReturnViewCar.setOnClickListener(new View.OnClickListener() {

@@ -55,7 +55,7 @@ public class CarHomeAdapter extends RecyclerView.Adapter<CarHomeAdapter.CarHomeV
             Bitmap bitmap = BitmapFactory.decodeByteArray(car.getImage(), 0, car.getImage().length);
             holder.imgCarHome.setImageBitmap(bitmap);
         } else {
-            holder.imgCarHome.setImageResource(R.drawable.logo);
+            holder.imgCarHome.setImageResource(R.drawable.banner);
         }
         holder.tvCarHome.setText(car.getModel());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
