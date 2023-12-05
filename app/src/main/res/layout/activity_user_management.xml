@@ -6,16 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".UserManagementActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#039BE5"
-        android:elevation="4dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+    <include layout="@layout/toolbar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/toolbar1"
+        android:layout_below="@+id/toolbar"
         android:id="@+id/rcvUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

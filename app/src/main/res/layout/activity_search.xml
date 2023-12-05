@@ -3,17 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".SearchActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#039BE5"
-        android:elevation="4dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+    <include layout="@layout/toolbar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvCarSearch"

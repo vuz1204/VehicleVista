@@ -2,11 +2,13 @@ package fpoly.vunvph33438.vehiclevista;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,6 +26,13 @@ public class SalesReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_report);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Sales report");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         edTuNgay = findViewById(R.id.edTuNgay);
         edDenNgay = findViewById(R.id.edDenNgay);
         tvRevenue = findViewById(R.id.tvRevenue);
@@ -44,6 +53,17 @@ public class SalesReportActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please enter the full date", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void showDatePickerDialog(EditText editText) {

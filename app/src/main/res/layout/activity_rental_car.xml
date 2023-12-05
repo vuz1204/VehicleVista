@@ -5,109 +5,126 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivityAddReceipt.RentalCar">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:orientation="vertical">
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edIdCarRental"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnReturnRentCar"
+            android:layout_width="60dp"
+            android:layout_height="65dp"
+            android:drawableLeft="@drawable/ic_arrow_back"
+            android:backgroundTint="#eceff4"
+            app:cornerRadius="70dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="ID CAR"
-            android:inputType="number"
-            android:padding="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edIdCarRental"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="ID CAR"
+                android:inputType="number"
+                android:padding="10dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edNameCarRental"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="NAME CAR"
-            android:inputType="number"
-            android:padding="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edStartDate"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edNameCarRental"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="NAME CAR"
+                android:inputType="number"
+                android:padding="10dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="START DATE"
-            android:inputType="number"
-            android:padding="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edEndDate"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="START DATE"
+                android:inputType="number"
+                android:padding="10dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="END DATE"
-            android:inputType="number"
-            android:padding="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="END DATE"
+                android:inputType="number"
+                android:padding="10dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edPriceRenTalCar"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="PRICE"
-            android:inputType="number"
-            android:padding="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="PAYMENT:"
-        android:textSize="20sp"/>
-    <RadioGroup
-        android:id="@+id/rdoGroupRentalCar"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:id="@+id/rdoDirectPayment"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edPriceRenTalCar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="PRICE"
+                android:inputType="number"
+                android:padding="10dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"
-            android:text="Direct Payment"
-            android:textSize="20dp"/>
-        <RadioButton
-            android:id="@+id/rdoCreditCardPayment"
-            android:layout_width="wrap_content"
+            android:text="PAYMENT:"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/rdoGroupRentalCar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Credit Card"
-            android:textSize="20dp"/>
-    </RadioGroup>
-</LinearLayout>
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rdoDirectPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="Direct Payment"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:id="@+id/rdoCreditCardPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Credit Card"
+                android:textSize="20dp" />
+        </RadioGroup>
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnRentalCar"
         android:layout_width="match_parent"

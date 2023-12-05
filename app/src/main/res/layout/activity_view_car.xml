@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ActivityAddReceipt.ViewCar">
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,41 +16,57 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/imgViewCar"
-                android:layout_margin="20dp"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="380dp"
+                android:layout_height="450dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="20dp">
 
-            <TextView
-                android:id="@+id/tvNameViewCar"
+                <ImageView
+                    android:id="@+id/imgViewCar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReturnViewCar"
+                    android:layout_width="60dp"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:drawableLeft="@drawable/ic_arrow_back"
+                    android:backgroundTint="#eceff4"
+                    app:cornerRadius="70dp" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Name: "
-                android:textSize="30dp"
-                android:textStyle="bold"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvPriceViewCar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Price: "
-                android:textSize="30dp" />
+                <TextView
+                    android:id="@+id/tvNameViewCar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name: "
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvDescriptionViewCar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Description: "
-                android:textSize="30dp" />
+                <TextView
+                    android:id="@+id/tvPriceViewCar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Price: "
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvAvailableViewCar"
@@ -59,20 +76,33 @@
                 android:text="Available"
                 android:textSize="30dp" />
 
-            <TextView
-                android:id="@+id/tvStartDateViewCar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Start date"
-                android:textSize="30dp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvStartDateViewCar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start date"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvEndDateViewCar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End date"
+                    android:textSize="30dp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tvEndDateViewCar"
+                android:id="@+id/tvDescriptionViewCar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="End date"
+                android:text="Description: "
                 android:textSize="30dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

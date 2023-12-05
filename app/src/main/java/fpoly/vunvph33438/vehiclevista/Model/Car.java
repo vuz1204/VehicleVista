@@ -1,5 +1,8 @@
 package fpoly.vunvph33438.vehiclevista.Model;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Car {
     private int idCar;
     private int idBrand;
@@ -8,7 +11,6 @@ public class Car {
     private String description;
     private int available;
     private byte[] image;
-
 
     public Car(int idCar, int idBrand, String model, int price,String description, int available, byte[] image) {
         this.idCar = idCar;
@@ -21,7 +23,21 @@ public class Car {
     }
 
     public Car() {
+    }
 
+    public String getPriceFormatted() {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        return numberFormat.format(price);
+    }
+
+    public void setPriceFormatted(String formattedPrice) {
+        try {
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+            Number parsed = numberFormat.parse(formattedPrice);
+            this.price = parsed.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getIdCar() {

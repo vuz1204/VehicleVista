@@ -59,6 +59,7 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
                 holder.tvIdCar.setText("Model: " + carName);
                 holder.tvStartDate.setText("Start Date: " + receipt.getRentalStartDate());
                 holder.tvEndDate.setText("End Date: " + receipt.getRentalEndDate());
+                holder.tvDate.setText("Receipt creation date: " + receipt.getDate());
                 if (receipt.getPaymentMethod() == 0) {
                     holder.tvPayment.setTextColor(Color.RED);
                     holder.tvPayment.setText("Unpaid");
@@ -66,12 +67,12 @@ public class ReceiptUserAdapter extends RecyclerView.Adapter<ReceiptUserAdapter.
                     holder.tvPayment.setTextColor(Color.BLUE);
                     holder.tvPayment.setText("Paid");
                 }
-                holder.tvPrice.setText(String.valueOf(receipt.getPrice()));
+                String formattedPrice = receipt.getPriceFormatted();
+                holder.tvPrice.setText(formattedPrice + " ₫");
             } else {
                 holder.itemView.setVisibility(View.GONE);
                 holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }
-            holder.tvDate.setText("Date: " + receipt.getDate());
         }
     }
 

@@ -17,7 +17,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbarMain"
                 app:titleTextColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

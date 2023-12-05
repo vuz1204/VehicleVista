@@ -35,7 +35,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
     EditText edNameCar, edIdCar, edStartDate, edEndDate, edPrice;
     RadioGroup rdoGroup;
     RadioButton rdoDirectPayment, rdoCreditCard;
-    Button btnRentalCar;
+    Button btnRentalCar, btnReturnRentCar;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     CarDAO carDAO;
     private EditText selectedEditText;
@@ -58,6 +58,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         rdoDirectPayment = findViewById(R.id.rdoDirectPayment);
         rdoCreditCard = findViewById(R.id.rdoCreditCardPayment);
         btnRentalCar = findViewById(R.id.btnRentalCar);
+        btnReturnRentCar = findViewById(R.id.btnReturnRentCar);
 
         int idCar = getIntent().getIntExtra("carId", -1);
         carPrice = getIntent().getIntExtra("carPrice", 0);
@@ -69,6 +70,10 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
         edStartDate.setOnClickListener(v -> showDatePickerDialog(edStartDate));
 
         edEndDate.setOnClickListener(v -> showDatePickerDialog(edEndDate));
+
+        btnReturnRentCar.setOnClickListener(v -> {
+            finish();
+        });
 
         btnRentalCar.setOnClickListener(v -> rentCar());
     }

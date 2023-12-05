@@ -66,7 +66,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             holder.tvIdCar.setText("ID Car: " + car.getIdCar());
             holder.tvIdBrand.setText("ID Brand: " + brandName);
             holder.tvModel.setText("Model: " + car.getModel());
-            holder.tvPrice.setText("Price: " + car.getPrice());
+            String formattedPrice = car.getPriceFormatted();
+            holder.tvPrice.setText("Price: " + formattedPrice + " ₫");
             holder.tvDescription.setText("Description: " + car.getDescription());
             if (car.isAvailable() == 0) {
                 holder.tvAvailable.setTextColor(Color.BLUE);

@@ -38,6 +38,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id_brand INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "brand TEXT NOT NULL)";
         sqLiteDatabase.execSQL(createBrandTable);
+
+        // Insert a default brand
         insertBrands(sqLiteDatabase, "KIA");
         insertBrands(sqLiteDatabase, "Toyota");
         insertBrands(sqLiteDatabase, "Mercedes");

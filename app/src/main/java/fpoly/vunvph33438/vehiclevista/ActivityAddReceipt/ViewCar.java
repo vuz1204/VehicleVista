@@ -1,7 +1,5 @@
 package fpoly.vunvph33438.vehiclevista.ActivityAddReceipt;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
 
 import fpoly.vunvph33438.vehiclevista.DAO.CarDAO;
 import fpoly.vunvph33438.vehiclevista.DAO.ReceiptDAO;
@@ -25,7 +23,7 @@ public class ViewCar extends AppCompatActivity {
 
     ImageView imgViewCar;
     TextView tvNameViewCar, tvPriceViewCar, tvDescriptionViewCar, tvAvailableViewCar, tvStartDateViewCar, tvEndDateViewCar;
-    Button btnRentalViewCar;
+    Button btnRentalViewCar, btnReturnViewCar;
     CarDAO carDAO;
     ReceiptDAO receiptDAO;
 
@@ -41,6 +39,7 @@ public class ViewCar extends AppCompatActivity {
         tvStartDateViewCar = findViewById(R.id.tvStartDateViewCar);
         tvEndDateViewCar = findViewById(R.id.tvEndDateViewCar);
         btnRentalViewCar = findViewById(R.id.btnRentalViewCar);
+        btnReturnViewCar = findViewById(R.id.btnReturnViewCar);
 
         int carId = getIntent().getIntExtra("carId", -1);
         if (carId != -1) {
@@ -50,8 +49,9 @@ public class ViewCar extends AppCompatActivity {
             receiptDAO = new ReceiptDAO(this);
             Receipt receipt = receiptDAO.selectIdByCar(String.valueOf(carId));
 
-            tvNameViewCar.setText("Name: " + car.getModel());
-            tvPriceViewCar.setText("Price: " + car.getPrice());
+            tvNameViewCar.setText(car.getModel());
+            String formattedPrice = car.getPriceFormatted();
+            tvPriceViewCar.setText(formattedPrice + " ₫");
             tvDescriptionViewCar.setText("Description: " + car.getDescription());
             if (car.isAvailable() == 0) {
                 tvAvailableViewCar.setTextColor(Color.BLUE);
@@ -63,8 +63,8 @@ public class ViewCar extends AppCompatActivity {
                 tvAvailableViewCar.setText("UnAvailable");
                 tvStartDateViewCar.setVisibility(View.VISIBLE);
                 tvEndDateViewCar.setVisibility(View.VISIBLE);
-                tvStartDateViewCar.setText(receipt.getRentalStartDate());
-                tvEndDateViewCar.setText(receipt.getRentalEndDate());
+                tvStartDateViewCar.setText(String.valueOf(receipt.getRentalStartDate()));
+                tvEndDateViewCar.setText(" --> " + receipt.getRentalEndDate());
             }
 
             if (car.getImage() != null && car.getImage().length > 0) {
@@ -74,16 +74,23 @@ public class ViewCar extends AppCompatActivity {
                 imgViewCar.setImageResource(R.drawable.logo);
             }
 
+            btnReturnViewCar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
             btnRentalViewCar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   if (car.isAvailable()==0){
-                       Intent intent = new Intent(ViewCar.this, RentalCar.class);
-                       intent.putExtra("carId", car.getIdCar());
-                       intent.putExtra("carPrice", car.getPrice());
-                       startActivity(intent);
-                   }else {
-                       Toast.makeText(ViewCar.this, "The car is being rented", Toast.LENGTH_SHORT).show();
+                    if (car.isAvailable() == 0) {
+                        Intent intent = new Intent(ViewCar.this, RentalCar.class);
+                        intent.putExtra("carId", car.getIdCar());
+                        intent.putExtra("carPrice", car.getPrice());
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(ViewCar.this, "The car is being rented", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

@@ -1,5 +1,8 @@
 package fpoly.vunvph33438.vehiclevista.Model;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Receipt {
     private int id_Receipt;
     private int id_Car;
@@ -22,6 +25,21 @@ public class Receipt {
         this.paymentMethod = paymentMethod;
         this.price = price;
         this.date = date;
+    }
+
+    public String getPriceFormatted() {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        return numberFormat.format(price);
+    }
+
+    public void setPriceFormatted(String formattedPrice) {
+        try {
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+            Number parsed = numberFormat.parse(formattedPrice);
+            this.price = parsed.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId_Receipt() {
