@@ -50,7 +50,7 @@ public class SalesReportFragment extends Fragment {
             String tuNgay = edTuNgay.getText().toString();
             String denNgay = edDenNgay.getText().toString();
             if (!tuNgay.isEmpty() && !denNgay.isEmpty()) {
-                tvRevenue.setText(receiptDAO.Revenue(tuNgay, denNgay) + " VND");
+                tvRevenue.setText(receiptDAO.revenue(tuNgay, denNgay) + " VND");
             } else {
                 Toast.makeText(getContext(), "Please enter the full date", Toast.LENGTH_SHORT).show();
             }

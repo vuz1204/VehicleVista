@@ -7,7 +7,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import fpoly.vunvph33438.vehiclevista.Database.DbHelper;
 import fpoly.vunvph33438.vehiclevista.Model.Receipt;
@@ -122,10 +125,10 @@ public class ReceiptDAO {
         return list;
     }
 
-    public int Revenue(String tuNgay, String denNgay) {
+    public int revenue(String startDate, String endDate) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String sql = "SELECT SUM(price) as revenue FROM Receipt WHERE date BETWEEN ? AND ?";
-        String dk[] = {tuNgay, denNgay};
+        String dk[] = {startDate, endDate};
         int revenue = 0;
         Cursor cursor = sqLiteDatabase.rawQuery(sql, dk);
         if (cursor.moveToFirst()) {
