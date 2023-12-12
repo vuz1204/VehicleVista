@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import fpoly.vunvph33438.vehiclevista.Adapter.BrandAdapter;
@@ -24,6 +26,7 @@ import fpoly.vunvph33438.vehiclevista.DAO.BrandDAO;
 import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.R;
+import fpoly.vunvph33438.vehiclevista.TranslateAnimationUtil;
 
 public class BrandFragment extends Fragment {
 
@@ -33,6 +36,7 @@ public class BrandFragment extends Fragment {
     EditText edIdBrand, edBrand;
     ArrayList<Brand> list = new ArrayList<>();
     BrandAdapter brandAdapter;
+    FloatingActionButton fabBrand;
 
     public BrandFragment() {
         // Required empty public constructor
@@ -42,7 +46,7 @@ public class BrandFragment extends Fragment {
         return str.matches("[a-zA-Z0-9]+");
     }
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand, container, false);
@@ -51,10 +55,13 @@ public class BrandFragment extends Fragment {
         brandDAO = new BrandDAO(getContext());
         list = brandDAO.selectAll();
         brandAdapter = new BrandAdapter(getContext(), list);
+        fabBrand = view.findViewById(R.id.fabBrand);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(brandAdapter);
 
-        view.findViewById(R.id.fabBrand).setOnClickListener(v -> {
+        recyclerView.setOnTouchListener(new TranslateAnimationUtil(getActivity(), fabBrand));
+
+        fabBrand.setOnClickListener(v -> {
             showAddOrEditDialog_Brand(getContext(), 0, null);
         });
 
