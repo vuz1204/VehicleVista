@@ -1,5 +1,6 @@
 package fpoly.vunvph33438.vehiclevista.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +45,7 @@ import fpoly.vunvph33438.vehiclevista.Interface.ItemClickListener;
 import fpoly.vunvph33438.vehiclevista.Model.Brand;
 import fpoly.vunvph33438.vehiclevista.Model.Car;
 import fpoly.vunvph33438.vehiclevista.R;
+import fpoly.vunvph33438.vehiclevista.TranslateAnimationUtil;
 
 public class CarFragment extends Fragment {
 
@@ -60,6 +64,7 @@ public class CarFragment extends Fragment {
     ArrayList<Brand> listBrand = new ArrayList<>();
     int idBrand;
     CarAdapter carAdapter;
+    FloatingActionButton fabCar;
     private Uri selectedImageUri;
     private final ActivityResultLauncher<String> importImageLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), this::onImagePicked);
 
@@ -67,6 +72,7 @@ public class CarFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -77,8 +83,11 @@ public class CarFragment extends Fragment {
         list = carDAO.getAllCars();
         tempListCar = carDAO.getAllCars();
         carAdapter = new CarAdapter(getContext(), list);
+        fabCar = view.findViewById(R.id.fabCar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(carAdapter);
+
+        recyclerView.setOnTouchListener(new TranslateAnimationUtil(getActivity(), fabCar));
 
         edSearchCar = view.findViewById(R.id.edSearchCar);
         edSearchCar.addTextChangedListener(new TextWatcher() {
@@ -108,7 +117,7 @@ public class CarFragment extends Fragment {
         });
 
 
-        view.findViewById(R.id.fabCar).setOnClickListener(v -> {
+        fabCar.setOnClickListener(v -> {
             showAddOrUpdateDialog(getContext(), 0, null);
         });
 
@@ -160,7 +169,7 @@ public class CarFragment extends Fragment {
             edDescription.setText(car.getDescription());
 
             String carImage = Arrays.toString(car.getImage());
-            if (carImage != null && !carImage.isEmpty()) {
+            if (!carImage.isEmpty()) {
                 selectedImageUri = Uri.parse(carImage);
                 try {
                     Bitmap selectedImage = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
