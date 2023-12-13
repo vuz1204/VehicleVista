@@ -10,89 +10,109 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvIdReceiptUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Receipt ID:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvIdCarReceiptUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Car ID:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvRentalStartDateUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Rental Start Date:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvRentalEndDateUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Rental End Date:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDateReceiptUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Date: "
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvPaymentMethodUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Checkout"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000000" />
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvIdReceiptUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Price:"
-                    android:textSize="20dp"
+                    android:text="Receipt ID:"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvPriceReceiptUser"
+                    android:id="@+id/tvIdCarReceiptUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textColor="#FF0D0D"
-                    android:textSize="20dp"
+                    android:text="Car ID:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRentalStartDateUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Rental Start Date:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRentalEndDateUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Rental End Date:"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDateReceiptUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Date: "
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPaymentMethodUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Checkout"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvStatusReceiptUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Status: "
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgCheckPayment"
+                android:layout_width="130dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Price:"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPriceReceiptUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="#FF0D0D"
+                android:textSize="20dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

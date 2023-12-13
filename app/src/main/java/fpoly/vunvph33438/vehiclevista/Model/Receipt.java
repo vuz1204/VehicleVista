@@ -11,20 +11,24 @@ public class Receipt {
     private String rentalEndDate;
     private int price;
     private int paymentMethod;
+    private int status;
     private String date;
+    private byte[] imagePayment;
 
     public Receipt() {
     }
 
-    public Receipt(int id_Receipt, int id_Car, int id_User, String rentalStartDate, String rentalEndDate, int paymentMethod, int price,String date) {
+    public Receipt(int id_Receipt, int id_Car, int id_User, String rentalStartDate, String rentalEndDate, int price,int paymentMethod,int status, String date, byte[] imagePayment) {
         this.id_Receipt = id_Receipt;
         this.id_Car = id_Car;
         this.id_User = id_User;
         this.rentalStartDate = rentalStartDate;
         this.rentalEndDate = rentalEndDate;
-        this.paymentMethod = paymentMethod;
         this.price = price;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
         this.date = date;
+        this.imagePayment = imagePayment;
     }
 
     public String getPriceFormatted() {
@@ -104,5 +108,22 @@ public class Receipt {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public byte[] getImagePayment() {
+        return imagePayment;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setImagePayment(byte[] imagePayment) {
+        this.imagePayment = imagePayment;
+
     }
 }

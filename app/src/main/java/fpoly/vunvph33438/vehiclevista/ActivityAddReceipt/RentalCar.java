@@ -107,8 +107,7 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
             Toast.makeText(this, "Rent successfully", Toast.LENGTH_SHORT).show();
             list.add(receipt);
             updateCarAvailability(Integer.parseInt(edIdCar.getText().toString()));
-            Intent intent = new Intent(RentalCar.this, CarBookingHistoryFragment.class);
-            startActivity(intent);
+            finish();
         } else {
             Toast.makeText(this, "Rent failed", Toast.LENGTH_SHORT).show();
         }
