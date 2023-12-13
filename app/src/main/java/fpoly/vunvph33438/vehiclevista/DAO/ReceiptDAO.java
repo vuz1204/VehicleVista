@@ -23,7 +23,9 @@ public class ReceiptDAO {
     private static final String COLUMN_RENTAL_END_DATE = "rentalEndDate";
     private static final String COLUMN_PRICE = "price";
     private static final String COLUMN_PAYMENT_METHOD = "paymentMethod";
+    private static final String COLUMN_STATUS = "status";
     private static final String COLUMN_DATE = "date";
+    private static final String COLUMN_IMAGE_PAYMENT = "imagePayment";
     DbHelper dbHelper;
     private Context context;
     private UserDAO userDAO;
@@ -43,7 +45,9 @@ public class ReceiptDAO {
         contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
         contentValues.put(COLUMN_PRICE, receipt.getPrice());
         contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
+        contentValues.put(COLUMN_STATUS, receipt.getStatus());
         contentValues.put(COLUMN_DATE, receipt.getDate());
+        contentValues.put(COLUMN_IMAGE_PAYMENT, receipt.getImagePayment());
         try {
             long insertedId = sqLiteDatabase.insertOrThrow(TABLE_NAME, null, contentValues);
             receipt.setId_Receipt((int) insertedId);
@@ -64,7 +68,7 @@ public class ReceiptDAO {
         return check != -1;
     }
 
-    public boolean updatePaymentMethod(Receipt receipt, boolean isPayment) {
+    public boolean update(Receipt receipt, boolean isStatus) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         String[] whereArgs = {String.valueOf(receipt.getId_Receipt())};
         ContentValues contentValues = new ContentValues();
@@ -75,10 +79,12 @@ public class ReceiptDAO {
         contentValues.put(COLUMN_RENTAL_END_DATE, receipt.getRentalEndDate());
         contentValues.put(COLUMN_PRICE, receipt.getPrice());
         contentValues.put(COLUMN_PAYMENT_METHOD, receipt.getPaymentMethod());
+        contentValues.put(COLUMN_STATUS, receipt.getStatus());
         contentValues.put(COLUMN_DATE, receipt.getDate());
+        contentValues.put(COLUMN_IMAGE_PAYMENT, receipt.getImagePayment());
         // Update paymentMethod based on the boolean value
-        int paymentMethodValue = isPayment ? 1 : 0;
-        contentValues.put(COLUMN_PAYMENT_METHOD, paymentMethodValue);
+        int paymentMethodValue = isStatus ? 1 : 0;
+        contentValues.put(COLUMN_STATUS, paymentMethodValue);
 
         long check = sqLiteDatabase.update(TABLE_NAME, contentValues, COLUMN_ID_RECEIPT + "=?", whereArgs);
         return check != -1;
@@ -112,10 +118,12 @@ public class ReceiptDAO {
                 int id_User = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID_USER));
                 String rentalStartDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RENTAL_START_DATE));
                 String rentalEndDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RENTAL_END_DATE));
-                int paymentMethod = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_METHOD));
                 int price = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PRICE));
+                int paymentMethod = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_METHOD));
+                int status = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS));
                 String date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
-                list.add(new Receipt(id_Receipt, id_Car, id_User, rentalStartDate, rentalEndDate, paymentMethod, price, date));
+                byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_PAYMENT));
+                list.add(new Receipt(id_Receipt, id_Car, id_User, rentalStartDate, rentalEndDate,price, paymentMethod, status, date, image));
             }
         }
         cursor.close();
@@ -138,4 +146,14 @@ public class ReceiptDAO {
         cursor.close();
         return revenue;
     }
+    public boolean updateImage(int receiptId, byte[] image) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IMAGE_PAYMENT, image);
+        String[] whereArgs = {String.valueOf(receiptId)};
+        int rowsAffected = db.update(TABLE_NAME, values, COLUMN_ID_RECEIPT + " = ?", whereArgs);
+        db.close();
+        return rowsAffected > 0;
+    }
+
 }

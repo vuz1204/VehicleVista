@@ -86,13 +86,10 @@ public class CarFragment extends Fragment {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String searchText = charSequence.toString().toLowerCase();
-
                 list.clear();
-
                 for (Car car : tempListCar) {
                     if (car.getModel().toLowerCase().contains(searchText)) {
                         list.add(car);
@@ -100,13 +97,11 @@ public class CarFragment extends Fragment {
                 }
                 carAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
-
 
         view.findViewById(R.id.fabCar).setOnClickListener(v -> {
             showAddOrUpdateDialog(getContext(), 0, null);
@@ -119,7 +114,6 @@ public class CarFragment extends Fragment {
                 showAddOrUpdateDialog(getContext(), 1, car);
             }
         });
-
         return view;
     }
 

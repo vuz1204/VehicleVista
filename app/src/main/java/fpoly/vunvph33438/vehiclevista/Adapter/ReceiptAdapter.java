@@ -1,12 +1,15 @@
 package fpoly.vunvph33438.vehiclevista.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,16 +65,31 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             holder.tvEndDate.setText("End Date: " + receipt.getRentalEndDate());
             holder.tvDate.setText("Receipt creation date: " + receipt.getDate());
             if (receipt.getPaymentMethod() == 0) {
-                holder.tvPayment.setTextColor(Color.RED);
-                holder.tvPayment.setText("Unpaid");
+                holder.tvPayment.setTextColor(Color.GREEN);
+                holder.tvPayment.setText("Direct Payment");
             } else {
-                holder.tvPayment.setTextColor(Color.BLUE);
-                holder.tvPayment.setText("Paid");
+                holder.tvPayment.setTextColor(Color.GREEN);
+                holder.tvPayment.setText("Internet Banking");
+                byte[] imageBytes = receipt.getImagePayment();
+                if (imageBytes != null) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                    holder.imgCheckPaymentAdmin.setImageBitmap(bitmap);
+                } else {
+                    holder.imgCheckPaymentAdmin.setImageResource(R.drawable.img_camera);
+                }
+            }
+            if (receipt.getStatus() == 0) {
+                holder.tvStatus.setTextColor(Color.RED);
+                holder.tvStatus.setText("Unpaid");
+            } else {
+                holder.tvStatus.setTextColor(Color.BLUE);
+                holder.tvStatus.setText("Paid");
             }
             String formattedPrice = receipt.getPriceFormatted();
             holder.tvPrice.setText(formattedPrice + " ₫");
         }
         setupLongClickDialog(holder.itemView, receipt);
+
     }
 
     private void setupLongClickDialog(View view, Receipt receipt) {
@@ -87,15 +105,10 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         builder.setView(view);
         AlertDialog alertDialog = builder.create();
         CheckBox cboReceipt = view.findViewById(R.id.cboPaymentReceipt);
-
-        cboReceipt.setChecked(receipt.getPaymentMethod() == 1);
-
-
+        cboReceipt.setChecked(receipt.getStatus() == 1);
         view.findViewById(R.id.btnSaveReceipt).setOnClickListener(v -> {
-
-            boolean isPayment = cboReceipt.isChecked();
-
-            if (receiptDAO.updatePaymentMethod(receipt, isPayment)) {
+            boolean isStatus = cboReceipt.isChecked();
+            if (receiptDAO.update(receipt, isStatus)) {
                 Toast.makeText(context, "Payment method updated successfully", Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             } else {
@@ -118,8 +131,8 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     }
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder {
-        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice, tvDate;
-
+        TextView tvIdReceipt, tvIdCar, tvIdUser, tvStartDate, tvEndDate, tvPayment, tvPrice, tvDate,tvStatus;
+        ImageView imgCheckPaymentAdmin;
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIdReceipt = itemView.findViewById(R.id.tvIdReceiptAdmin);
@@ -130,6 +143,8 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             tvPayment = itemView.findViewById(R.id.tvPaymentMethodAdmin);
             tvPrice = itemView.findViewById(R.id.tvPriceReceiptAdmin);
             tvDate = itemView.findViewById(R.id.tvDateReceipt);
+            tvStatus = itemView.findViewById(R.id.tvStatusReceipt);
+            imgCheckPaymentAdmin = itemView.findViewById(R.id.imgCheckPaymentAdmin);
         }
 
     }
