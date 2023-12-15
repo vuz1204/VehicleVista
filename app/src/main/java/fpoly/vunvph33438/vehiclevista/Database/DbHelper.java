@@ -66,8 +66,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 "rentalStartDate TEXT NOT NULL, " +
                 "rentalEndDate TEXT NOT NULL, " +
                 "price INTEGER NOT NULL, " +
-                "paymentMethod INTEGER NOT NULL, " +
+                "paymentMethod INTEGER NOT NULL," +
+                "status INTEGER NOT NULL, " +
                 "date TEXT NOT NULL," +
+                "imagePayment BLOB," +
                 "FOREIGN KEY (id_car) REFERENCES Car (id_car), " +
                 "FOREIGN KEY (id_user) REFERENCES User (id_user))";
         sqLiteDatabase.execSQL(createReceiptTable);

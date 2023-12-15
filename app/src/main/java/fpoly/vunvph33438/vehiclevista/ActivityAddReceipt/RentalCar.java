@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -162,7 +163,8 @@ public class RentalCar extends AppCompatActivity implements DatePickerDialog.OnD
                 long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 int totalPrice = (int) (diff * carPrice);
-                Log.d("RentalCar", "TotalPrice: " + totalPrice);
+                NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+                numberFormat.format(totalPrice);
                 edPrice.setText(String.valueOf(totalPrice));
             } catch (ParseException e) {
                 e.printStackTrace();

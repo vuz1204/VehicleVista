@@ -67,6 +67,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             if (receipt.getPaymentMethod() == 0) {
                 holder.tvPayment.setTextColor(Color.GREEN);
                 holder.tvPayment.setText("Direct Payment");
+                holder.imgCheckPaymentAdmin.setImageDrawable(null);
             } else {
                 holder.tvPayment.setTextColor(Color.GREEN);
                 holder.tvPayment.setText("Internet Banking");
@@ -114,7 +115,6 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             } else {
                 Toast.makeText(context, "Failed to update payment method", Toast.LENGTH_SHORT).show();
             }
-
             alertDialog.dismiss();
         });
 
